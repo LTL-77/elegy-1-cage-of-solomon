@@ -1,6 +1,6 @@
 # Elegy -1: Cage of Solomon
 
-`Elegy -1: Cage of Solomon` is an open development repository for the playable demo of the game currently titled `Elegy -1: Cage of Solomon`.
+`Elegy -1: Cage of Solomon` is an open development repository for the playable demo of `Elegy -1: Cage of Solomon`, a prequel entry in the larger `Elegy` setting.
 
 This repository contains only the public-facing game project: Godot scenes, scripts, configuration, and assets that are safe to distribute. Private setting documents, full lore, unreleased narrative drafts, and other internal materials are intentionally kept outside this repository.
 
@@ -8,7 +8,7 @@ This repository contains only the public-facing game project: Godot scenes, scri
 
 The project is currently in early pre-production / prototype transition.
 
-The current development target is a small vertical-slice demo built around:
+The current development target is a small vertical-slice prequel demo built around:
 
 - strong narrative presentation
 - chapter-based progression
