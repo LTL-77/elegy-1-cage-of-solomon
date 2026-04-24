@@ -40,7 +40,7 @@ theme_override_constants/separation = 18
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
-text = "Narrative"
+text = "叙事"
 
 [node name="BodyLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true

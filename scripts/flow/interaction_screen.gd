@@ -13,10 +13,10 @@ var _required_inspections := 1
 
 
 func setup(step: Dictionary) -> void:
-	_title_label.text = str(step.get("title", "Interaction"))
+	_title_label.text = str(step.get("title", "互动"))
 	_description_label.text = str(step.get("description", ""))
 	_required_inspections = int(step.get("required_inspections", 1))
-	_result_label.text = "Select an interaction point."
+	_result_label.text = "选择一个可调查的点。"
 	_continue_button.disabled = true
 
 	for child in _options_container.get_children():
@@ -24,7 +24,7 @@ func setup(step: Dictionary) -> void:
 
 	for option in step.get("options", []):
 		var button := Button.new()
-		button.text = str(option.get("label", "Option"))
+		button.text = str(option.get("label", "选项"))
 		button.pressed.connect(_on_option_pressed.bind(option, button))
 		_options_container.add_child(button)
 

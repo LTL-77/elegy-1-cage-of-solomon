@@ -23,10 +23,10 @@ func _show_current_line() -> void:
 		return
 
 	_body_label.text = str(_lines[_line_index])
-	_continue_button.text = "Continue"
+	_continue_button.text = "继续"
 
 	if _line_index == _lines.size() - 1:
-		_continue_button.text = "Proceed"
+		_continue_button.text = "进入下一步"
 
 
 func _on_continue_button_pressed() -> void:

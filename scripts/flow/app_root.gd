@@ -37,7 +37,7 @@ func _load_json_file(path: String) -> Dictionary:
 		push_error("Failed to open content file: %s" % path)
 		return {}
 
-	var parsed := JSON.parse_string(file.get_as_text())
+	var parsed: Variant = JSON.parse_string(file.get_as_text())
 	if typeof(parsed) != TYPE_DICTIONARY:
 		push_error("Invalid JSON dictionary in: %s" % path)
 		return {}
@@ -85,7 +85,7 @@ func _run_current_step() -> void:
 		return
 
 	var step: Dictionary = _flow_steps[_current_step_index]
-	var step_type := step.get("type", "")
+	var step_type: String = str(step.get("type", ""))
 
 	match step_type:
 		"narrative":
@@ -112,7 +112,7 @@ func _show_interaction(step: Dictionary) -> void:
 
 
 func _show_battle(step: Dictionary) -> void:
-	var battle_id := step.get("battle_id", "")
+	var battle_id: String = str(step.get("battle_id", ""))
 	var encounter: Dictionary = _battle_data.get("battles", {}).get(battle_id, {})
 	_pre_battle_player_state = _game_state.get("player", {}).duplicate(true)
 	_swap_screen(BATTLE_SCENE.instantiate())
@@ -173,7 +173,7 @@ func _load_game() -> bool:
 	if file == null:
 		return false
 
-	var parsed = JSON.parse_string(file.get_as_text())
+	var parsed: Variant = JSON.parse_string(file.get_as_text())
 	if typeof(parsed) != TYPE_DICTIONARY:
 		return false
 

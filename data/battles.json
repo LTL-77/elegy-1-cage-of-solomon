@@ -1,6 +1,6 @@
 {
   "player_template": {
-    "name": "Indels",
+    "name": "因第尔斯",
     "max_hp": 44,
     "hp": 44,
     "atk": 11,
@@ -15,11 +15,11 @@
   },
   "battles": {
     "tutorial_patrol": {
-      "name": "Beiyao Patrol",
-      "intro_text": "Two guards close in. They are not elite, but they force the first decision.",
+      "name": "北遥巡逻队",
+      "intro_text": "两名守卫逼近。他们并不强，但足够逼出第一个选择。",
       "enemies": [
         {
-          "name": "Patrol Guard",
+          "name": "巡逻守卫",
           "max_hp": 18,
           "hp": 18,
           "atk": 6,
@@ -33,7 +33,7 @@
           "overload_turns": 0
         },
         {
-          "name": "Patrol Guard",
+          "name": "巡逻守卫",
           "max_hp": 18,
           "hp": 18,
           "atk": 6,
@@ -49,11 +49,11 @@
       ]
     },
     "solomon_beiyao": {
-      "name": "Solomon Beiyao",
-      "intro_text": "Solomon Beiyao does not look surprised. He looks confirmed.",
+      "name": "所罗门·北遥",
+      "intro_text": "所罗门·北遥并不惊讶，他只是像被再一次确认。",
       "enemies": [
         {
-          "name": "Solomon Beiyao",
+          "name": "所罗门·北遥",
           "max_hp": 40,
           "hp": 40,
           "atk": 10,

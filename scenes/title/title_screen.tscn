@@ -44,14 +44,14 @@ text = "Elegy -1: Cage of Solomon"
 [node name="SubtitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-text = "Vertical Slice Prototype"
+text = "垂直切片原型"
 
 [node name="DescriptionLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 180)
 layout_mode = 2
 bbcode_enabled = true
 fit_content = true
-text = "A narrative-heavy prototype built around Beiyao, static scene interaction, and turn-based combat."
+text = "当前原型围绕北遥事件展开，包含标题页、叙事演出、静态场景交互与单人回合制战斗。"
 
 [node name="ButtonRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -59,16 +59,16 @@ theme_override_constants/separation = 12
 
 [node name="NewGameButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonRow"]
 layout_mode = 2
-text = "New Game"
+text = "开始"
 
 [node name="LoadButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonRow"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Load"
+text = "继续"
 
 [node name="QuitButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonRow"]
 layout_mode = 2
-text = "Quit"
+text = "退出"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonRow/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonRow/LoadButton" to="." method="_on_load_button_pressed"]

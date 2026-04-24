@@ -75,21 +75,21 @@ func _format_enemy_block() -> String:
 		])
 
 	if lines.is_empty():
-		lines.append("No enemies remain.")
+		lines.append("没有存活的敌人。")
 
 	return "\n".join(lines)
 
 
 func _build_status_text() -> String:
 	var spirit := int(_player.get("spirit", 0))
-	var max_spirit := max(int(_player.get("max_spirit", 1)), 1)
+	var max_spirit: int = max(int(_player.get("max_spirit", 1)), 1)
 	var threshold_ratio := float(spirit) / float(max_spirit)
 
 	if spirit > max_spirit:
-		return "[color=%s]Overload active. Spirit can no longer be reduced safely.[/color]" % OVERLOAD_SPIRIT_COLOR.to_html()
+		return "[color=%s]灵性已进入崩解状态，之后的代价无法逆转。[/color]" % OVERLOAD_SPIRIT_COLOR.to_html()
 	if threshold_ratio <= 0.25:
-		return "[color=%s]Dangerously low spirit. Another costly action may kill Indels.[/color]" % DANGER_SPIRIT_COLOR.to_html()
-	return "[color=%s]Spirit is within the safe band.[/color]" % SAFE_SPIRIT_COLOR.to_html()
+		return "[color=%s]灵性过低，再一次消耗可能直接导致枯竭。[/color]" % DANGER_SPIRIT_COLOR.to_html()
+	return "[color=%s]灵性仍在安全区间内。[/color]" % SAFE_SPIRIT_COLOR.to_html()
 
 
 func _on_attack_button_pressed() -> void:
@@ -114,29 +114,29 @@ func _player_turn(action: String) -> void:
 
 	match action:
 		"attack":
-			var target := _living_enemies().front()
+			var target: Dictionary = _living_enemies().front()
 			if target != null:
-				var damage := _basic_damage(_player, target)
+				var damage: int = _basic_damage(_player, target)
 				target["hp"] = max(0, int(target.get("hp", 0)) - damage)
-				_append_log("%s strikes %s for %d damage." % [_player["name"], target["name"], damage])
+				_append_log("%s 对 %s 造成了 %d 点伤害。" % [_player["name"], target["name"], damage])
 		"skill":
 			var skill_cost := int(_player.get("skill_cost", 0))
 			_player["spirit"] = int(_player.get("spirit", 0)) - skill_cost
 			if int(_player.get("spirit", 0)) < 0:
-				_append_log("%s burns too deep into spirit and collapses." % _player["name"])
+				_append_log("%s 透支了灵性，直接陷入枯竭。" % _player["name"])
 				_player["hp"] = 0
 				_end_battle(false)
 				return
 
-			var skill_target := _living_enemies().front()
+			var skill_target: Dictionary = _living_enemies().front()
 			if skill_target != null:
-				var spirit_bonus := int(round(float(_player.get("spirit", 0)) * float(_player.get("skill_power", 0.0))))
-				var damage := max(1, int(_player.get("atk", 0)) + spirit_bonus - int(skill_target.get("def", 0)))
+				var spirit_bonus: int = int(round(float(_player.get("spirit", 0)) * float(_player.get("skill_power", 0.0))))
+				var damage: int = max(1, int(_player.get("atk", 0)) + spirit_bonus - int(skill_target.get("def", 0)))
 				skill_target["hp"] = max(0, int(skill_target.get("hp", 0)) - damage)
-				_append_log("%s uses a spirit technique on %s for %d damage." % [_player["name"], skill_target["name"], damage])
+				_append_log("%s 对 %s 施展灵性技，造成 %d 点伤害。" % [_player["name"], skill_target["name"], damage])
 		"focus":
 			_player["spirit"] = min(int(_player.get("max_spirit", 0)), int(_player.get("spirit", 0)) + 5)
-			_append_log("%s focuses and restores spirit." % _player["name"])
+			_append_log("%s 收束心神，恢复了灵性。" % _player["name"])
 
 	_cleanup_dead_enemies()
 	if _living_enemies().is_empty():
@@ -147,15 +147,15 @@ func _player_turn(action: String) -> void:
 		if _process_turn_start(enemy):
 			continue
 
-		var damage := _basic_damage(enemy, _player)
+		var damage: int = _basic_damage(enemy, _player)
 		_player["hp"] = max(0, int(_player.get("hp", 0)) - damage)
-		_append_log("%s attacks %s for %d damage." % [enemy["name"], _player["name"], damage])
+		_append_log("%s 对 %s 造成了 %d 点伤害。" % [enemy["name"], _player["name"], damage])
 
 		if int(enemy.get("max_spirit", 0)) > 0 and int(enemy.get("spirit", 0)) >= int(enemy.get("skill_cost", 0)) and int(enemy.get("hp", 0)) <= int(enemy.get("max_hp", 0)) / 2:
 			enemy["spirit"] = int(enemy.get("spirit", 0)) - int(enemy.get("skill_cost", 0))
-			var skill_damage := max(1, int(enemy.get("atk", 0)) + int(round(float(enemy.get("spirit", 0)) * float(enemy.get("skill_power", 0.0)))) - int(_player.get("def", 0)))
+			var skill_damage: int = max(1, int(enemy.get("atk", 0)) + int(round(float(enemy.get("spirit", 0)) * float(enemy.get("skill_power", 0.0)))) - int(_player.get("def", 0)))
 			_player["hp"] = max(0, int(_player.get("hp", 0)) - skill_damage)
-			_append_log("%s presses the advantage with a spirit strike for %d damage." % [enemy["name"], skill_damage])
+			_append_log("%s 以灵性技追击，造成 %d 点伤害。" % [enemy["name"], skill_damage])
 
 		if int(_player.get("hp", 0)) <= 0:
 			_end_battle(false)
@@ -172,10 +172,10 @@ func _process_turn_start(unit: Dictionary) -> bool:
 	if overload_left > 0:
 		overload_left -= 1
 		unit["overload_turns_left"] = overload_left
-		_append_log("%s is overloaded. %d turn(s) remain before collapse." % [unit["name"], overload_left])
+		_append_log("%s 已进入崩解，距离死亡还剩 %d 回合。" % [unit["name"], overload_left])
 		if overload_left <= 0:
 			unit["hp"] = 0
-			_append_log("%s collapses under overload." % unit["name"])
+			_append_log("%s 在崩解中彻底瓦解。" % unit["name"])
 			return true
 	else:
 		var max_spirit := int(unit.get("max_spirit", 0))
@@ -184,7 +184,7 @@ func _process_turn_start(unit: Dictionary) -> bool:
 
 	if int(unit.get("spirit", 0)) > int(unit.get("max_spirit", 0)):
 		unit["overload_turns_left"] = int(unit.get("overload_turns", 2))
-		_append_log("%s enters overload." % unit["name"])
+		_append_log("%s 的灵性越界，进入崩解。" % unit["name"])
 
 	return false
 
@@ -201,7 +201,7 @@ func _cleanup_dead_enemies() -> void:
 	for enemy in _enemies:
 		if int(enemy.get("hp", 0)) == 0 and not enemy.get("defeated_logged", false):
 			enemy["defeated_logged"] = true
-			_append_log("%s falls." % enemy["name"])
+			_append_log("%s 倒下了。" % enemy["name"])
 
 
 func _append_log(line: String) -> void:
@@ -216,8 +216,8 @@ func _append_log(line: String) -> void:
 func _end_battle(victory: bool) -> void:
 	_battle_over = true
 	if victory:
-		_append_log("Victory.")
+		_append_log("战斗胜利。")
 	else:
-		_append_log("Defeat. The battle will restart.")
+		_append_log("战斗失败。即将重新开始。")
 	_update_ui()
 	battle_finished.emit(victory, _player.duplicate(true))

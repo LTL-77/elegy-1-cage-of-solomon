@@ -45,7 +45,7 @@ theme_override_constants/separation = 16
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
-text = "Location"
+text = "地点"
 
 [node name="DescriptionLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/LeftPanel"]
 unique_name_in_owner = true
@@ -74,6 +74,6 @@ scroll_active = false
 [node name="ContinueButton" type="Button" parent="MarginContainer/HBoxContainer/RightPanel"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Continue"
+text = "继续"
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/RightPanel/ContinueButton" to="." method="_on_continue_button_pressed"]

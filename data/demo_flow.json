@@ -3,44 +3,44 @@
     {
       "id": "opening",
       "type": "narrative",
-      "title": "Prologue",
+      "title": "序章",
       "lines": [
-        "2439. The empire is still standing, but Beiyao already sounds hollow from the inside.",
-        "Indels returns to a city where command, faith, and fear have fused into the same iron shell.",
-        "This demo begins at the edge of a political fracture, before the full revolution takes shape."
+        "2439年，帝国尚未倾塌，但北遥内部早已空响如钟。",
+        "因第尔斯回到这座城市时，命令、信仰与恐惧已经熔成同一层铁壳。",
+        "这个 Demo 从裂口真正张开之前开始。"
       ]
     },
     {
       "id": "arrival",
       "type": "interaction",
-      "title": "Beiyao Gate",
-      "description": "Inspect the immediate surroundings before moving deeper into the city.",
+      "title": "北遥城门",
+      "description": "在继续深入之前，先观察周围的情况。",
       "required_inspections": 2,
       "options": [
         {
           "id": "watchtower",
-          "label": "Inspect the watchtower",
-          "result": "The watchtower banners still hang straight. The soldiers beneath them do not."
+          "label": "查看哨塔",
+          "result": "哨塔上的旗帜仍然笔直，旗帜下的人却不是。"
         },
         {
           "id": "crowd",
-          "label": "Observe the crowd",
-          "result": "No one speaks above a whisper. Even panic here has discipline."
+          "label": "观察人群",
+          "result": "没有人敢大声说话，连恐慌在这里都带着纪律。"
         },
         {
           "id": "orders",
-          "label": "Read the posted order",
-          "result": "The decree promises stability. Every line beneath it smells of emergency rule."
+          "label": "阅读告示",
+          "result": "告示承诺秩序与稳定，但每一行都透着戒严的味道。"
         }
       ]
     },
     {
       "id": "tutorial_battle_intro",
       "type": "narrative",
-      "title": "First Friction",
+      "title": "第一次摩擦",
       "lines": [
-        "A local patrol moves to stop you before questions can become trouble.",
-        "This fight introduces the core loop: basic attacks are stable, spirit skills are stronger, and spirit mismanagement can kill you from either end."
+        "一支本地巡逻队先一步拦了上来，他们不允许问题先于秩序出现。",
+        "这场战斗用于建立核心规则：普通攻击稳定，灵性技能更强，而灵性过低或过高都可能致命。"
       ]
     },
     {
@@ -51,11 +51,11 @@
     {
       "id": "between_battles",
       "type": "narrative",
-      "title": "Approach",
+      "title": "逼近",
       "lines": [
-        "The patrol falls, but the city does not loosen.",
-        "Every corridor ahead feels less like a route and more like a sentence already written.",
-        "At the center of Beiyao, Solomon Beiyao is waiting."
+        "巡逻队倒下了，北遥却没有因此松动。",
+        "前方的每一段路都不像路径，更像一条早已写好的判词。",
+        "在北遥更深处，所罗门·北遥正在等待。"
       ]
     },
     {
@@ -66,11 +66,11 @@
     {
       "id": "closing",
       "type": "narrative",
-      "title": "After The Blade",
+      "title": "刀锋之后",
       "lines": [
-        "The assassination lands, but the structure around it does not collapse.",
-        "If anything, Beiyao now feels more truthful: power wounded, not broken.",
-        "This is the end of the first vertical slice. The next step is to turn this scaffold into a sharper chapter with final writing, presentation, and systems."
+        "刺杀命中了，但围绕它的结构并未崩塌。",
+        "此刻的北遥反而显得更真实了：权力受伤，却未断裂。",
+        "第一版垂直切片到此结束。接下来要做的，是把这副骨架压实成真正的章节。"
       ]
     }
   ]
