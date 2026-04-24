@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccddtem2y40km"]
+
+[ext_resource type="Script" path="res://scripts/flow/app_root.gd" id="1_8on3q"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_8on3q")

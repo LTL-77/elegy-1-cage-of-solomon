@@ -1,0 +1,77 @@
+{
+  "steps": [
+    {
+      "id": "opening",
+      "type": "narrative",
+      "title": "Prologue",
+      "lines": [
+        "2439. The empire is still standing, but Beiyao already sounds hollow from the inside.",
+        "Indels returns to a city where command, faith, and fear have fused into the same iron shell.",
+        "This demo begins at the edge of a political fracture, before the full revolution takes shape."
+      ]
+    },
+    {
+      "id": "arrival",
+      "type": "interaction",
+      "title": "Beiyao Gate",
+      "description": "Inspect the immediate surroundings before moving deeper into the city.",
+      "required_inspections": 2,
+      "options": [
+        {
+          "id": "watchtower",
+          "label": "Inspect the watchtower",
+          "result": "The watchtower banners still hang straight. The soldiers beneath them do not."
+        },
+        {
+          "id": "crowd",
+          "label": "Observe the crowd",
+          "result": "No one speaks above a whisper. Even panic here has discipline."
+        },
+        {
+          "id": "orders",
+          "label": "Read the posted order",
+          "result": "The decree promises stability. Every line beneath it smells of emergency rule."
+        }
+      ]
+    },
+    {
+      "id": "tutorial_battle_intro",
+      "type": "narrative",
+      "title": "First Friction",
+      "lines": [
+        "A local patrol moves to stop you before questions can become trouble.",
+        "This fight introduces the core loop: basic attacks are stable, spirit skills are stronger, and spirit mismanagement can kill you from either end."
+      ]
+    },
+    {
+      "id": "tutorial_battle",
+      "type": "battle",
+      "battle_id": "tutorial_patrol"
+    },
+    {
+      "id": "between_battles",
+      "type": "narrative",
+      "title": "Approach",
+      "lines": [
+        "The patrol falls, but the city does not loosen.",
+        "Every corridor ahead feels less like a route and more like a sentence already written.",
+        "At the center of Beiyao, Solomon Beiyao is waiting."
+      ]
+    },
+    {
+      "id": "boss_battle",
+      "type": "battle",
+      "battle_id": "solomon_beiyao"
+    },
+    {
+      "id": "closing",
+      "type": "narrative",
+      "title": "After The Blade",
+      "lines": [
+        "The assassination lands, but the structure around it does not collapse.",
+        "If anything, Beiyao now feels more truthful: power wounded, not broken.",
+        "This is the end of the first vertical slice. The next step is to turn this scaffold into a sharper chapter with final writing, presentation, and systems."
+      ]
+    }
+  ]
+}

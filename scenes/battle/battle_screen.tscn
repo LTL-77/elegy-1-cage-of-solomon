@@ -1,0 +1,101 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/battle_screen.gd" id="1_76u4m"]
+
+[node name="BattleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_76u4m")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.101961, 0.0627451, 0.0627451, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="BattleNameLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Battle"
+
+[node name="StatusLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="Combatants" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="PlayerLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/Combatants"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 140)
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="EnemyLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/Combatants"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 140)
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="ActionRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="AttackButton" type="Button" parent="MarginContainer/VBoxContainer/ActionRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Attack"
+
+[node name="SkillButton" type="Button" parent="MarginContainer/VBoxContainer/ActionRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Spirit Skill"
+
+[node name="FocusButton" type="Button" parent="MarginContainer/VBoxContainer/ActionRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Focus"
+
+[node name="LogLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 220)
+layout_mode = 2
+bbcode_enabled = true
+scroll_active = false
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ActionRow/AttackButton" to="." method="_on_attack_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ActionRow/SkillButton" to="." method="_on_skill_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ActionRow/FocusButton" to="." method="_on_focus_button_pressed"]

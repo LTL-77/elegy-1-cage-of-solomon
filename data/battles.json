@@ -1,0 +1,72 @@
+{
+  "player_template": {
+    "name": "Indels",
+    "max_hp": 44,
+    "hp": 44,
+    "atk": 11,
+    "def": 4,
+    "spd": 9,
+    "max_spirit": 20,
+    "spirit": 12,
+    "spirit_recovery": 3,
+    "skill_cost": 5,
+    "skill_power": 1.1,
+    "overload_turns": 2
+  },
+  "battles": {
+    "tutorial_patrol": {
+      "name": "Beiyao Patrol",
+      "intro_text": "Two guards close in. They are not elite, but they force the first decision.",
+      "enemies": [
+        {
+          "name": "Patrol Guard",
+          "max_hp": 18,
+          "hp": 18,
+          "atk": 6,
+          "def": 2,
+          "spd": 6,
+          "max_spirit": 0,
+          "spirit": 0,
+          "spirit_recovery": 0,
+          "skill_cost": 0,
+          "skill_power": 0.0,
+          "overload_turns": 0
+        },
+        {
+          "name": "Patrol Guard",
+          "max_hp": 18,
+          "hp": 18,
+          "atk": 6,
+          "def": 2,
+          "spd": 5,
+          "max_spirit": 0,
+          "spirit": 0,
+          "spirit_recovery": 0,
+          "skill_cost": 0,
+          "skill_power": 0.0,
+          "overload_turns": 0
+        }
+      ]
+    },
+    "solomon_beiyao": {
+      "name": "Solomon Beiyao",
+      "intro_text": "Solomon Beiyao does not look surprised. He looks confirmed.",
+      "enemies": [
+        {
+          "name": "Solomon Beiyao",
+          "max_hp": 40,
+          "hp": 40,
+          "atk": 10,
+          "def": 4,
+          "spd": 8,
+          "max_spirit": 10,
+          "spirit": 4,
+          "spirit_recovery": 2,
+          "skill_cost": 4,
+          "skill_power": 0.8,
+          "overload_turns": 2
+        }
+      ]
+    }
+  }
+}
