@@ -13,6 +13,7 @@ var _required_inspections := 1
 
 
 func setup(step: Dictionary) -> void:
+	_visited = {}
 	_title_label.text = str(step.get("title", "互动"))
 	_description_label.text = str(step.get("description", ""))
 	_required_inspections = int(step.get("required_inspections", 1))
@@ -25,8 +26,23 @@ func setup(step: Dictionary) -> void:
 	for option in step.get("options", []):
 		var button := Button.new()
 		button.text = str(option.get("label", "选项"))
+		button.focus_mode = Control.FOCUS_ALL
 		button.pressed.connect(_on_option_pressed.bind(option, button))
 		_options_container.add_child(button)
+
+	call_deferred("_focus_first_option")
+
+
+func _focus_first_option() -> void:
+	for child in _options_container.get_children():
+		if child is Button and not child.disabled:
+			child.grab_focus()
+			return
+	_continue_button.grab_focus()
+
+
+func regain_focus() -> void:
+	call_deferred("_focus_first_option")
 
 
 func _on_option_pressed(option: Dictionary, button: Button) -> void:
@@ -35,6 +51,10 @@ func _on_option_pressed(option: Dictionary, button: Button) -> void:
 	button.disabled = true
 	_result_label.text = str(option.get("result", ""))
 	_continue_button.disabled = _visited.size() < _required_inspections
+	if _continue_button.disabled:
+		call_deferred("_focus_first_option")
+	else:
+		_continue_button.grab_focus()
 
 
 func _on_continue_button_pressed() -> void:

@@ -44,7 +44,7 @@ text = "战斗"
 
 [node name="StatusLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 48)
+custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 bbcode_enabled = true
 fit_content = true
@@ -56,7 +56,7 @@ theme_override_constants/separation = 20
 
 [node name="PlayerLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/Combatants"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(260, 140)
+custom_minimum_size = Vector2(260, 160)
 layout_mode = 2
 bbcode_enabled = true
 fit_content = true
@@ -64,30 +64,45 @@ scroll_active = false
 
 [node name="EnemyLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/Combatants"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(260, 140)
+custom_minimum_size = Vector2(320, 160)
 layout_mode = 2
 bbcode_enabled = true
 fit_content = true
 scroll_active = false
 
-[node name="ActionRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="ActionGrid" type="GridContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 12
+columns = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
 
-[node name="AttackButton" type="Button" parent="MarginContainer/VBoxContainer/ActionRow"]
+[node name="PhysicalAttackButton" type="Button" parent="MarginContainer/VBoxContainer/ActionGrid"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "普通攻击"
+text = "囚印"
 
-[node name="SkillButton" type="Button" parent="MarginContainer/VBoxContainer/ActionRow"]
+[node name="SpiritAttackButton" type="Button" parent="MarginContainer/VBoxContainer/ActionGrid"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "灵性技"
+text = "灵击"
 
-[node name="FocusButton" type="Button" parent="MarginContainer/VBoxContainer/ActionRow"]
+[node name="SkillOneButton" type="Button" parent="MarginContainer/VBoxContainer/ActionGrid"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "收束"
+text = "缄束"
+
+[node name="SkillTwoButton" type="Button" parent="MarginContainer/VBoxContainer/ActionGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "永隔之域"
+
+[node name="SkillThreeButton" type="Button" parent="MarginContainer/VBoxContainer/ActionGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "囚笼收拢"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/ActionGrid"]
+layout_mode = 2
 
 [node name="LogLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
@@ -96,6 +111,8 @@ layout_mode = 2
 bbcode_enabled = true
 scroll_active = false
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/ActionRow/AttackButton" to="." method="_on_attack_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/ActionRow/SkillButton" to="." method="_on_skill_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/ActionRow/FocusButton" to="." method="_on_focus_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ActionGrid/PhysicalAttackButton" to="." method="_on_physical_attack_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ActionGrid/SpiritAttackButton" to="." method="_on_spirit_attack_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ActionGrid/SkillOneButton" to="." method="_on_skill_one_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ActionGrid/SkillTwoButton" to="." method="_on_skill_two_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ActionGrid/SkillThreeButton" to="." method="_on_skill_three_button_pressed"]

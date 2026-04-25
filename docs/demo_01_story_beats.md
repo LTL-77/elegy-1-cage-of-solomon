@@ -2,37 +2,46 @@
 
 ## Scope
 
-This document defines only the first playable demo, not the full game.
+This document defines only the first playable demo chapter around the Beiyao incident.
 
 ## Beat List
 
-1. Prologue text card
-   Establish the empire after the failed invasion and the political instability around Beiyao.
+1. 序章字卡
+   用最少的文字建立时间点、北遥的压抑状态，以及因第尔斯不是“来调查”，而是“来动手”。
 
-2. Arrival at Beiyao
-   Introduce the immediate place, tone, and the player's control over `Indels`.
+2. 抵达北遥城门
+   玩家第一次进入场景。这里不是世界观百科，而是通过视觉和调查文本让玩家感到北遥已经烂透了。
 
-3. Guided interaction
-   The player inspects one or two points in the scene and receives limited exposition.
+3. 城门调查
+   玩家调查哨塔、人群、告示。每个交互点都只服务一件事：证明这座城的秩序已经只剩下暴力和习惯。
 
-4. First confrontation
-   A short dialogue sequence frames the local conflict and transitions into a tutorial battle.
+4. 巡逻兵拦截
+   冲突必须来得快，不能拖。因第尔斯不是来辩论的，北遥也不会先给人解释的时间。
 
-5. Tutorial battle
-   The player learns turn order, normal attack, skill use, and the danger of the spiritual resource.
+5. 教学战
+   教玩家三件事：
+   - 因第尔斯不是高爆发角色
+   - 灵性是优势，也是风险
+   - 这套战斗强调“改写敌人行动形状”
 
-6. Aftermath dialogue
-   The result of the first battle gives space for character framing and raises the stakes.
+6. 战后推进
+   战后不做大段解释，只把气氛往更冷、更确定的方向推。要让玩家意识到刺杀不是突发事件，而是一场已经决定好的逼近。
 
-7. March toward the assassination point
-   A short pre-boss scene reinforces trust, imprisonment, and inevitability as themes.
+7. 接近城主府
+   这是 Boss 战前的最后一层情绪垫子。核心不是喊口号，而是把“今夜之后北遥会裂开”这件事立起来。
 
-8. Boss encounter
-   The demo culminates in the `Solomon Beiyao` fight.
+8. 所罗门·北遥战
+   Boss 战的作用不是单纯提高数值，而是让玩家第一次感到“帝国的秩序不是一个杂兵加强版”。这一战要有压迫感，但必须可过。
 
-9. Closing beat
-   The ending scene should leave the player with a strong tonal hook and clear continuation pressure.
+9. 刀锋之后
+   结尾不做完整收束，只留下裂口。Demo 应该让玩家感觉：北遥之乱刚刚开始，真正的问题还在后面。
 
 ## Writing Constraint
 
-The demo must explain only the minimum needed to understand the conflict in front of the player. It should not attempt to unload the full cosmology.
+The chapter must not dump the full metaphysical structure of the setting.
+
+It only needs to establish:
+
+- 北遥已经腐坏
+- 因第尔斯是会真正动手的人
+- 这次刺杀会撬开更大的裂口

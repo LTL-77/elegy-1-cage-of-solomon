@@ -4,27 +4,70 @@ const TITLE_SCENE := preload("res://scenes/title/title_screen.tscn")
 const NARRATIVE_SCENE := preload("res://scenes/narrative/narrative_screen.tscn")
 const INTERACTION_SCENE := preload("res://scenes/narrative/interaction_screen.tscn")
 const BATTLE_SCENE := preload("res://scenes/battle/battle_screen.tscn")
+const MAP_SCENE := preload("res://scenes/map/beiyao_gate_map.tscn")
+const CHARACTER_SCENE := preload("res://scenes/character/character_screen.tscn")
 
 const FLOW_DATA_PATH := "res://data/demo_flow.json"
 const BATTLE_DATA_PATH := "res://data/battles.json"
+const CHARACTER_DATA_PATH := "res://data/characters.json"
 const SAVE_PATH := "user://savegame.json"
 
 var _flow_steps: Array = []
 var _battle_data: Dictionary = {}
+var _character_data: Dictionary = {}
 var _current_screen: Node
+var _overlay_screen: Control
 var _current_step_index := 0
 var _game_state := {}
 var _pre_battle_player_state := {}
+var _pending_unlock_steps: Array[Dictionary] = []
+
 
 func _ready() -> void:
+	_apply_window_mode()
 	_load_content()
 	_reset_game_state()
 	_show_title()
 
 
+func _apply_window_mode() -> void:
+	if not _can_use_fullscreen():
+		return
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+
+
+func _input(event: InputEvent) -> void:
+	if is_instance_valid(_overlay_screen):
+		return
+
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F11:
+		if not _can_use_fullscreen():
+			return
+		_toggle_fullscreen()
+		get_viewport().set_input_as_handled()
+		return
+
+	if event.is_action_pressed("character_menu") and not event.is_echo():
+		_open_character_menu(_selected_character_id())
+		get_viewport().set_input_as_handled()
+
+
+func _can_use_fullscreen() -> bool:
+	return not OS.has_feature("editor")
+
+
+func _toggle_fullscreen() -> void:
+	var current_mode: int = DisplayServer.window_get_mode()
+	if current_mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+
+
 func _load_content() -> void:
 	_flow_steps = _load_json_file(FLOW_DATA_PATH).get("steps", [])
 	_battle_data = _load_json_file(BATTLE_DATA_PATH)
+	_character_data = _load_json_file(CHARACTER_DATA_PATH)
 
 
 func _load_json_file(path: String) -> Dictionary:
@@ -48,7 +91,8 @@ func _load_json_file(path: String) -> Dictionary:
 func _reset_game_state() -> void:
 	_game_state = {
 		"completed_steps": [],
-		"player": _battle_data.get("player_template", {}).duplicate(true)
+		"player": _battle_data.get("player_template", {}).duplicate(true),
+		"character_progress": _build_initial_character_progress()
 	}
 	_current_step_index = 0
 
@@ -57,6 +101,7 @@ func _show_title() -> void:
 	_swap_screen(TITLE_SCENE.instantiate())
 	_current_screen.new_game_requested.connect(_on_new_game_requested)
 	_current_screen.load_game_requested.connect(_on_load_game_requested)
+	_current_screen.character_menu_requested.connect(_on_character_menu_requested)
 	_current_screen.quit_requested.connect(_on_quit_requested)
 	_current_screen.set_has_save(_has_save())
 
@@ -75,11 +120,19 @@ func _on_load_game_requested() -> void:
 	_run_current_step()
 
 
+func _on_character_menu_requested() -> void:
+	_open_character_menu(_selected_character_id())
+
+
 func _on_quit_requested() -> void:
 	get_tree().quit()
 
 
 func _run_current_step() -> void:
+	if not _pending_unlock_steps.is_empty():
+		_show_unlock_narrative(_pending_unlock_steps.pop_front())
+		return
+
 	if _current_step_index >= _flow_steps.size():
 		_show_title()
 		return
@@ -92,6 +145,8 @@ func _run_current_step() -> void:
 			_show_narrative(step)
 		"interaction":
 			_show_interaction(step)
+		"map":
+			_show_map(step)
 		"battle":
 			_show_battle(step)
 		_:
@@ -105,8 +160,20 @@ func _show_narrative(step: Dictionary) -> void:
 	_current_screen.completed.connect(_complete_step)
 
 
+func _show_unlock_narrative(step: Dictionary) -> void:
+	_swap_screen(NARRATIVE_SCENE.instantiate())
+	_current_screen.setup(step.get("title", ""), step.get("lines", []))
+	_current_screen.completed.connect(_run_current_step)
+
+
 func _show_interaction(step: Dictionary) -> void:
 	_swap_screen(INTERACTION_SCENE.instantiate())
+	_current_screen.setup(step)
+	_current_screen.completed.connect(_complete_step)
+
+
+func _show_map(step: Dictionary) -> void:
+	_swap_screen(MAP_SCENE.instantiate())
 	_current_screen.setup(step)
 	_current_screen.completed.connect(_complete_step)
 
@@ -135,6 +202,7 @@ func _complete_step() -> void:
 	var completed_steps: Array = _game_state.get("completed_steps", [])
 	completed_steps.append(step.get("id", "step_%d" % _current_step_index))
 	_game_state["completed_steps"] = completed_steps
+	_apply_step_rewards(step)
 	_current_step_index += 1
 	_save_game()
 	_run_current_step()
@@ -146,6 +214,145 @@ func _swap_screen(screen: Node) -> void:
 
 	add_child(screen)
 	_current_screen = screen
+
+
+func _open_character_menu(selected_character_id: String) -> void:
+	if is_instance_valid(_overlay_screen):
+		return
+
+	_overlay_screen = CHARACTER_SCENE.instantiate()
+	add_child(_overlay_screen)
+	_overlay_screen.setup(_build_character_roster(), selected_character_id)
+	_overlay_screen.close_requested.connect(_close_overlay)
+
+
+func _close_overlay() -> void:
+	if not is_instance_valid(_overlay_screen):
+		return
+
+	_overlay_screen.queue_free()
+	_overlay_screen = null
+	get_viewport().gui_release_focus()
+	if is_instance_valid(_current_screen) and _current_screen.has_method("regain_focus"):
+		_current_screen.call_deferred("regain_focus")
+
+
+func _selected_character_id() -> String:
+	var player: Dictionary = _game_state.get("player", {})
+	var player_name := str(player.get("name", ""))
+	var characters: Array = _character_data.get("characters", [])
+
+	for character in characters:
+		if str(character.get("name", "")) == player_name:
+			return str(character.get("id", ""))
+
+	if characters.is_empty():
+		return ""
+
+	return str(characters[0].get("id", ""))
+
+
+func _build_initial_character_progress() -> Dictionary:
+	var progress := {}
+	for character in _character_data.get("characters", []):
+		var character_dict: Dictionary = character
+		var understanding: Dictionary = character_dict.get("understanding", {})
+		progress[character_dict.get("id", "")] = {
+			"understanding_value": int(understanding.get("initial_value", 0)),
+			"is_inverted": false
+		}
+	return progress
+
+
+func _build_character_roster() -> Array:
+	var roster: Array = []
+	var progress_map: Dictionary = _game_state.get("character_progress", {})
+
+	for character in _character_data.get("characters", []):
+		var character_dict: Dictionary = (character as Dictionary).duplicate(true)
+		var character_id := str(character_dict.get("id", ""))
+		var progress: Dictionary = progress_map.get(character_id, {})
+		var understanding: Dictionary = character_dict.get("understanding", {})
+		understanding["current_value"] = int(progress.get("understanding_value", int(understanding.get("initial_value", 0))))
+		understanding["is_inverted"] = bool(progress.get("is_inverted", false))
+		character_dict["understanding"] = understanding
+		roster.append(character_dict)
+
+	return roster
+
+
+func add_character_understanding(character_id: String, amount: int) -> Array:
+	var progress_map: Dictionary = _game_state.get("character_progress", {})
+	if not progress_map.has(character_id):
+		return []
+
+	var progress: Dictionary = progress_map.get(character_id, {})
+	if bool(progress.get("is_inverted", false)):
+		return []
+
+	var current_value := int(progress.get("understanding_value", 0))
+	var updated_value := clampi(current_value + amount, 0, 100)
+	progress["understanding_value"] = updated_value
+	progress_map[character_id] = progress
+	_game_state["character_progress"] = progress_map
+	_save_game()
+	return _build_understanding_unlocks(character_id, current_value, updated_value)
+
+
+func _apply_step_rewards(step: Dictionary) -> void:
+	for reward in step.get("understanding_rewards", []):
+		var reward_dict: Dictionary = reward
+		var unlock_steps: Array = add_character_understanding(
+			str(reward_dict.get("character_id", "")),
+			int(reward_dict.get("amount", 0))
+		)
+		for unlock_step in unlock_steps:
+			_pending_unlock_steps.append(unlock_step)
+
+
+func _build_understanding_unlocks(character_id: String, previous_value: int, current_value: int) -> Array:
+	var unlock_steps: Array[Dictionary] = []
+	var character := _find_character_by_id(character_id)
+	if character.is_empty():
+		return unlock_steps
+
+	for echo in character.get("echoes", []):
+		var echo_dict: Dictionary = echo
+		var unlock_value := int(echo_dict.get("unlock_value", 0))
+		if previous_value < unlock_value and current_value >= unlock_value:
+			var lines: Array[String] = []
+			lines.append("理解已达到 %d。" % unlock_value)
+			lines.append("回响剧情【%s】已解锁。" % str(echo_dict.get("title", "未命名回响")))
+			for line in echo_dict.get("story_lines", []):
+				lines.append(str(line))
+			unlock_steps.append({
+				"title": "%s · 回响解锁" % str(character.get("name", "角色")),
+				"lines": lines
+			})
+
+	var cg_unlock: Dictionary = character.get("cg_unlock", {})
+	if not cg_unlock.is_empty():
+		var cg_unlock_value := int(cg_unlock.get("unlock_value", 100))
+		if previous_value < cg_unlock_value and current_value >= cg_unlock_value:
+			var cg_lines: Array[String] = []
+			cg_lines.append("理解已达到 %d。" % cg_unlock_value)
+			cg_lines.append("角色 CG【%s】已解锁。" % str(cg_unlock.get("title", "未命名 CG")))
+			for line in cg_unlock.get("story_lines", []):
+				cg_lines.append(str(line))
+			unlock_steps.append({
+				"title": "%s · 角色 CG 解锁" % str(character.get("name", "角色")),
+				"lines": cg_lines
+			})
+
+	return unlock_steps
+
+
+func _find_character_by_id(character_id: String) -> Dictionary:
+	for character in _character_data.get("characters", []):
+		var character_dict: Dictionary = character
+		if str(character_dict.get("id", "")) == character_id:
+			return character_dict
+	return {}
 
 
 func _has_save() -> bool:
@@ -182,5 +389,7 @@ func _load_game() -> bool:
 
 	if _game_state.is_empty():
 		_reset_game_state()
+	elif not _game_state.has("character_progress"):
+		_game_state["character_progress"] = _build_initial_character_progress()
 
 	return true

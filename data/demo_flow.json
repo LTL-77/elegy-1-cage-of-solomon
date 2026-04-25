@@ -4,33 +4,92 @@
       "id": "opening",
       "type": "narrative",
       "title": "序章",
+      "understanding_rewards": [
+        {
+          "character_id": "yndeirs",
+          "amount": 10
+        }
+      ],
       "lines": [
-        "2439年，帝国尚未倾塌，但北遥内部早已空响如钟。",
-        "因第尔斯回到这座城市时，命令、信仰与恐惧已经熔成同一层铁壳。",
-        "这个 Demo 从裂口真正张开之前开始。"
+        "2439年，北遥仍挂着帝国的旗，但城里的每一道命令都已经带上了腐烂的气味。",
+        "因第尔斯回到这里，不是为了归乡，也不是为了接受新的差遣。他来，是为了确认一件事：北遥还值不值得继续活着。",
+        "这座城是帝国北境的钉子，也是许多人喉咙里的刺。今夜之后，它至少会少掉一位主人。"
       ]
     },
     {
       "id": "arrival",
-      "type": "interaction",
+      "type": "map",
       "title": "北遥城门",
-      "description": "在继续深入之前，先观察周围的情况。",
+      "description": "上下左右移动，先完成调查，再接近巡逻兵触发战前交互。",
+      "understanding_rewards": [
+        {
+          "character_id": "yndeirs",
+          "amount": 10
+        }
+      ],
       "required_inspections": 2,
-      "options": [
+      "map_bounds": {
+        "left": 96,
+        "right": 1184,
+        "top": 330,
+        "bottom": 500
+      },
+      "map_entities": [
         {
           "id": "watchtower",
-          "label": "查看哨塔",
-          "result": "哨塔上的旗帜仍然笔直，旗帜下的人却不是。"
+          "type": "inspect",
+          "trigger_mode": "interact",
+          "label": "哨塔",
+          "x": 292,
+          "y": 480,
+          "radius": 60,
+          "event_lines": [
+            "哨塔上的旗还悬得很高，塔下的士兵却全靠绷紧肩膀维持着帝国最后一点体面。"
+          ],
+          "result_summary": "你看清了哨塔上的军纪。"
         },
         {
           "id": "crowd",
-          "label": "观察人群",
-          "result": "没有人敢大声说话，连恐慌在这里都带着纪律。"
+          "type": "inspect",
+          "trigger_mode": "interact",
+          "label": "人群",
+          "x": 610,
+          "y": 500,
+          "radius": 60,
+          "event_lines": [
+            "街上的人说话都只剩半口气，像是害怕哪一句话先落地，哪一句话就会先招来军靴。"
+          ],
+          "result_summary": "你听见了城里压低的声音。"
         },
         {
           "id": "orders",
-          "label": "阅读告示",
-          "result": "告示承诺秩序与稳定，但每一行都透着戒严的味道。"
+          "type": "inspect",
+          "trigger_mode": "interact",
+          "label": "告示",
+          "x": 860,
+          "y": 470,
+          "radius": 60,
+          "event_lines": [
+            "告示上写着整肃、安定与忠诚。字迹很新，纸也很新，只有下面干掉的血不是新的。"
+          ],
+          "result_summary": "你确认了帝国正在用新的字句覆盖旧的血迹。"
+        },
+        {
+          "id": "patrol_block",
+          "type": "enemy",
+          "trigger_mode": "interact",
+          "label": "巡逻兵",
+          "x": 1038,
+          "y": 470,
+          "radius": 74,
+          "requires_inspections": true,
+          "completes_step": true,
+          "event_lines": [
+            "巡逻兵已经注意到了你。",
+            "他们先看见的不是脸，而是你停得太稳的脚步和不愿低下去的眼神。",
+            "再往前走，就不会只是调查了。"
+          ],
+          "result_summary": "巡逻兵拦住了去路。"
         }
       ]
     },
@@ -39,38 +98,80 @@
       "type": "narrative",
       "title": "第一次摩擦",
       "lines": [
-        "一支本地巡逻队先一步拦了上来，他们不允许问题先于秩序出现。",
-        "这场战斗用于建立核心规则：普通攻击稳定，灵性技能更强，而灵性过低或过高都可能致命。"
+        "北遥的巡逻兵先一步截住了去路。他们未必认得因第尔斯，但他们认得一种人：不服从命令的人。",
+        "这一战不是为了展示英雄，而是为了建立规则。因第尔斯擅长把敌人的行动一层层锁死，但灵性过低会枯竭，过高又会崩解。"
       ]
     },
     {
       "id": "tutorial_battle",
       "type": "battle",
-      "battle_id": "tutorial_patrol"
+      "battle_id": "tutorial_patrol",
+      "understanding_rewards": [
+        {
+          "character_id": "yndeirs",
+          "amount": 10
+        }
+      ]
     },
     {
       "id": "between_battles",
       "type": "narrative",
       "title": "逼近",
       "lines": [
-        "巡逻队倒下了，北遥却没有因此松动。",
-        "前方的每一段路都不像路径，更像一条早已写好的判词。",
-        "在北遥更深处，所罗门·北遥正在等待。"
+        "巡逻兵倒下后，城里没有任何骚动。北遥已经习惯了死人，只是还不习惯主人也会死。",
+        "因第尔斯继续向城主府走去。越靠近中心，街上的火光越整齐，脚步声也越少，像是整座城都在为某一场裁决让路。",
+        "所罗门·北遥就在那里。刺杀将要发生，但真正被刺穿的未必只是一个人。"
+      ]
+    },
+    {
+      "id": "boss_approach",
+      "type": "map",
+      "title": "城主府外",
+      "description": "靠近城主府前庭。Boss 警戒区会在你进入范围后强制触发战前交互。",
+      "map_bounds": {
+        "left": 240,
+        "right": 1130,
+        "top": 320,
+        "bottom": 500
+      },
+      "map_entities": [
+        {
+          "id": "solomon_trigger",
+          "type": "boss",
+          "trigger_mode": "proximity",
+          "label": "所罗门·北遥",
+          "x": 980,
+          "y": 430,
+          "radius": 96,
+          "completes_step": true,
+          "event_lines": [
+            "你刚踏入前庭，原本安静得近乎凝固的空气就先一步绷紧了。",
+            "所罗门·北遥没有后退。他只是转过身，像早已等到这一刻。",
+            "再接下来要发生的，不会再给任何人留下撤回的余地。"
+          ],
+          "result_summary": "所罗门·北遥已经看见了你。"
+        }
       ]
     },
     {
       "id": "boss_battle",
       "type": "battle",
-      "battle_id": "solomon_beiyao"
+      "battle_id": "solomon_beiyao",
+      "understanding_rewards": [
+        {
+          "character_id": "yndeirs",
+          "amount": 10
+        }
+      ]
     },
     {
       "id": "closing",
       "type": "narrative",
       "title": "刀锋之后",
       "lines": [
-        "刺杀命中了，但围绕它的结构并未崩塌。",
-        "此刻的北遥反而显得更真实了：权力受伤，却未断裂。",
-        "第一版垂直切片到此结束。接下来要做的，是把这副骨架压实成真正的章节。"
+        "刀锋命中了目标，但北遥并未因此立刻崩塌。帝国的秩序不是靠一个人站着，也不会因为一个人倒下就学会死亡。",
+        "可裂口已经出现了。因第尔斯很清楚，今晚之后再被讨论的，就不只是一次刺杀，而是北境有没有可能被真正撬开。",
+        "北遥之乱的第一道裂缝到此为止。接下来要进入的，不再只是逃离，而是革命真正开始之前的长夜。"
       ]
     }
   ]

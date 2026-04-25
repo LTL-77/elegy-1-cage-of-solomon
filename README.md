@@ -16,6 +16,20 @@ The current development target is a small vertical-slice prequel demo built arou
 - 2D turn-based combat
 - a self-contained story arc around the `2439` Beiyao incident
 
+## Download
+
+The current Windows demo build can be downloaded from the repository's latest [Releases](https://github.com/LTL-77/elegy-1-cage-of-solomon/releases).
+
+Current packaged build:
+
+- `Elegy-1-Cage-of-Solomon-windows-v0.1.0.zip`
+
+After downloading:
+
+1. extract the zip
+2. keep the `.exe` and `.pck` in the same folder
+3. launch `Elegy-1-Cage-of-Solomon.exe`
+
 ## Planned Demo Scope
 
 The first playable demo is intended to cover:

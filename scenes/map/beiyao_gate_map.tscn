@@ -1,0 +1,185 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/flow/map_screen.gd" id="1_h0m3p"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="2_qk541"]
+
+[node name="BeiyaoGateMap" type="Node2D"]
+script = ExtResource("1_h0m3p")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+unique_name_in_owner = true
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.105882, 0.109804, 0.145098, 1)
+
+[node name="DistantGlow" type="ColorRect" parent="."]
+unique_name_in_owner = true
+offset_top = 66.0
+offset_right = 1280.0
+offset_bottom = 170.0
+color = Color(0.278431, 0.227451, 0.176471, 0.16)
+
+[node name="FarWall" type="ColorRect" parent="."]
+unique_name_in_owner = true
+offset_top = 88.0
+offset_right = 1280.0
+offset_bottom = 328.0
+color = Color(0.160784, 0.156863, 0.180392, 1)
+
+[node name="MainGate" type="ColorRect" parent="."]
+unique_name_in_owner = true
+offset_left = 972.0
+offset_top = 106.0
+offset_right = 1138.0
+offset_bottom = 442.0
+color = Color(0.219608, 0.196078, 0.180392, 1)
+
+[node name="GateSeam" type="ColorRect" parent="."]
+unique_name_in_owner = true
+offset_left = 1051.0
+offset_top = 106.0
+offset_right = 1059.0
+offset_bottom = 442.0
+color = Color(0.0823529, 0.0745098, 0.0784314, 1)
+
+[node name="Ground" type="ColorRect" parent="."]
+unique_name_in_owner = true
+offset_top = 540.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.203922, 0.184314, 0.176471, 1)
+
+[node name="RoadStripe" type="ColorRect" parent="."]
+unique_name_in_owner = true
+offset_left = 104.0
+offset_top = 594.0
+offset_right = 1174.0
+offset_bottom = 602.0
+color = Color(0.45098, 0.392157, 0.317647, 0.38)
+
+[node name="PlayerAnchor" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(132, 490)
+
+[node name="HotspotLayer" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TopPanel" type="PanelContainer" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 688.0
+offset_bottom = 164.0
+
+[node name="TopMargin" type="MarginContainer" parent="CanvasLayer/TopPanel"]
+offset_right = 664.0
+offset_bottom = 144.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="TopVBox" type="VBoxContainer" parent="CanvasLayer/TopPanel/TopMargin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/TopPanel/TopMargin/TopVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "北遥城门"
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="CanvasLayer/TopPanel/TopMargin/TopVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+fit_content = true
+scroll_active = false
+bbcode_enabled = true
+text = "上下左右移动，靠近对象后按 [b]Enter[/b] 互动。"
+
+[node name="BottomPanel" type="PanelContainer" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 24.0
+offset_top = 548.0
+offset_right = 1256.0
+offset_bottom = 696.0
+
+[node name="BottomMargin" type="MarginContainer" parent="CanvasLayer/BottomPanel"]
+offset_right = 1232.0
+offset_bottom = 148.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="BottomVBox" type="VBoxContainer" parent="CanvasLayer/BottomPanel/BottomMargin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PromptLabel" type="RichTextLabel" parent="CanvasLayer/BottomPanel/BottomMargin/BottomVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+fit_content = true
+scroll_active = false
+bbcode_enabled = true
+text = "继续调查北遥城门。"
+
+[node name="ResultLabel" type="RichTextLabel" parent="CanvasLayer/BottomPanel/BottomMargin/BottomVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
+fit_content = true
+scroll_active = false
+bbcode_enabled = true
+text = "调查结果会显示在这里。"
+
+[node name="ProgressLabel" type="Label" parent="CanvasLayer/BottomPanel/BottomMargin/BottomVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "调查进度 0 / 0"
+
+[node name="EventPanel" type="PanelContainer" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+offset_left = 260.0
+offset_top = 160.0
+offset_right = 1020.0
+offset_bottom = 360.0
+
+[node name="EventMargin" type="MarginContainer" parent="CanvasLayer/EventPanel"]
+offset_right = 760.0
+offset_bottom = 200.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="EventVBox" type="VBoxContainer" parent="CanvasLayer/EventPanel/EventMargin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="EventTitleLabel" type="Label" parent="CanvasLayer/EventPanel/EventMargin/EventVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "事件"
+
+[node name="EventBodyLabel" type="RichTextLabel" parent="CanvasLayer/EventPanel/EventMargin/EventVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+text = "事件正文"
+
+[node name="EventContinueButton" type="Button" parent="CanvasLayer/EventPanel/EventMargin/EventVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "继续"
+
+[connection signal="pressed" from="CanvasLayer/EventPanel/EventMargin/EventVBox/EventContinueButton" to="." method="_on_event_continue_button_pressed"]

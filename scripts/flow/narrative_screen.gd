@@ -15,6 +15,15 @@ func setup(title: String, lines: Array) -> void:
 	_lines = lines.duplicate()
 	_line_index = 0
 	_show_current_line()
+	call_deferred("_focus_continue")
+
+
+func _focus_continue() -> void:
+	_continue_button.grab_focus()
+
+
+func regain_focus() -> void:
+	call_deferred("_focus_continue")
 
 
 func _show_current_line() -> void:
@@ -24,7 +33,6 @@ func _show_current_line() -> void:
 
 	_body_label.text = str(_lines[_line_index])
 	_continue_button.text = "继续"
-
 	if _line_index == _lines.size() - 1:
 		_continue_button.text = "进入下一步"
 

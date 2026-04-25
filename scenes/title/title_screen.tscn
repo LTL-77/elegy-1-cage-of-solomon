@@ -51,13 +51,14 @@ custom_minimum_size = Vector2(0, 180)
 layout_mode = 2
 bbcode_enabled = true
 fit_content = true
-text = "当前原型围绕北遥事件展开，包含标题页、叙事演出、静态场景交互与单人回合制战斗。"
+text = "当前原型围绕北遥事件展开，包含标题页、叙事演出、横版地图调查与单人回合制战斗。[br]现在也可以在任意流程中打开角色档案，查看角色属性与回响。"
 
 [node name="ButtonRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
 [node name="NewGameButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonRow"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "开始"
 
@@ -66,10 +67,15 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "继续"
 
+[node name="CharacterButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonRow"]
+layout_mode = 2
+text = "角色档案"
+
 [node name="QuitButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonRow"]
 layout_mode = 2
 text = "退出"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonRow/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonRow/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonRow/CharacterButton" to="." method="_on_character_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonRow/QuitButton" to="." method="_on_quit_button_pressed"]

@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/flow/map_player.gd" id="1_yg8y4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3og6v"]
+radius = 18.0
+height = 44.0
+
+[node name="MapPlayer" type="CharacterBody2D"]
+script = ExtResource("1_yg8y4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -26)
+shape = SubResource("CapsuleShape2D_3og6v")
+
+[node name="Shadow" type="Polygon2D" parent="."]
+position = Vector2(0, -2)
+color = Color(0, 0, 0, 0.28)
+polygon = PackedVector2Array(-20, 0, -10, -6, 10, -6, 20, 0, 10, 6, -10, 6)
+
+[node name="Body" type="Polygon2D" parent="."]
+position = Vector2(0, -30)
+polygon = PackedVector2Array(-18, 24, -14, -12, 0, -30, 14, -12, 18, 24)
+vertex_colors = PackedColorArray(0.333333, 0.341176, 0.411765, 1, 0.333333, 0.341176, 0.411765, 1, 0.913725, 0.882353, 0.811765, 1, 0.333333, 0.341176, 0.411765, 1, 0.333333, 0.341176, 0.411765, 1)
+
+[node name="Sigil" type="Line2D" parent="."]
+position = Vector2(0, -34)
+width = 3.0
+default_color = Color(0.847059, 0.737255, 0.584314, 1)
+points = PackedVector2Array(-8, 0, 0, -10, 8, 0, 0, 10, -8, 0)
