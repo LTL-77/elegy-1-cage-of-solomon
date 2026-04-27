@@ -1,0 +1,170 @@
+name: Release Windows Build
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release-windows:
+    runs-on: ubuntu-latest
+
+    env:
+      GODOT_VERSION: 4.6.2
+      GODOT_STATUS: stable
+      GODOT_VERSION_DIR: 4.6.2.stable
+      BUILD_NAME: Elegy-1-Cage-of-Solomon
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Godot and export templates
+        shell: bash
+        run: |
+          set -euo pipefail
+          ARCHIVE_VERSION="${GODOT_VERSION}-${GODOT_STATUS}"
+          GODOT_ZIP="Godot_v${ARCHIVE_VERSION}_linux.x86_64.zip"
+          TEMPLATE_TPZ="Godot_v${ARCHIVE_VERSION}_export_templates.tpz"
+          GODOT_BASE_URL="https://github.com/godotengine/godot-builds/releases/download/${ARCHIVE_VERSION}"
+
+          curl -L --fail --retry 3 --output "${RUNNER_TEMP}/${GODOT_ZIP}" "${GODOT_BASE_URL}/${GODOT_ZIP}"
+          curl -L --fail --retry 3 --output "${RUNNER_TEMP}/${TEMPLATE_TPZ}" "${GODOT_BASE_URL}/${TEMPLATE_TPZ}"
+
+          mkdir -p "${RUNNER_TEMP}/godot"
+          unzip -q "${RUNNER_TEMP}/${GODOT_ZIP}" -d "${RUNNER_TEMP}/godot"
+          chmod +x "${RUNNER_TEMP}/godot/Godot_v${ARCHIVE_VERSION}_linux.x86_64"
+
+          mkdir -p "${HOME}/.local/share/godot/export_templates/${GODOT_VERSION_DIR}"
+          unzip -q "${RUNNER_TEMP}/${TEMPLATE_TPZ}" -d "${HOME}/.local/share/godot/export_templates/${GODOT_VERSION_DIR}"
+
+      - name: Export Windows build
+        shell: bash
+        run: |
+          set -euo pipefail
+          ARCHIVE_VERSION="${GODOT_VERSION}-${GODOT_STATUS}"
+          mkdir -p build/windows
+          "${RUNNER_TEMP}/godot/Godot_v${ARCHIVE_VERSION}_linux.x86_64" \
+            --headless \
+            --path "${GITHUB_WORKSPACE}" \
+            --export-release "Windows Desktop" \
+            "build/windows/${BUILD_NAME}.exe"
+
+      - name: Package release zip
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="${GITHUB_REF_NAME}"
+          cd build/windows
+          ZIP_NAME="${BUILD_NAME}-windows-${VERSION}.zip"
+          zip -q "../${ZIP_NAME}" "${BUILD_NAME}.exe" "${BUILD_NAME}.pck"
+          echo "ZIP_NAME=${ZIP_NAME}" >> "${GITHUB_ENV}"
+          echo "VERSION=${VERSION}" >> "${GITHUB_ENV}"
+
+      - name: Publish release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          import json
+          import os
+          import pathlib
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+
+          token = os.environ["GITHUB_TOKEN"]
+          repo = os.environ["GITHUB_REPOSITORY"]
+          tag = os.environ["VERSION"]
+          zip_name = os.environ["ZIP_NAME"]
+          upload_path = pathlib.Path("build") / zip_name
+          release_name = f"{tag} demo"
+          body = "\n".join([
+              f"## {tag} demo",
+              "",
+              "Automated Windows build for Elegy -1: Cage of Solomon.",
+              "",
+              "Contents:",
+              "- latest exported `.exe` and `.pck` from the tagged source",
+              "- packaged automatically by GitHub Actions",
+          ])
+
+          headers = {
+              "Authorization": f"token {token}",
+              "Accept": "application/vnd.github+json",
+              "X-GitHub-Api-Version": "2022-11-28",
+              "User-Agent": "codex-github-actions",
+          }
+          api_base = f"https://api.github.com/repos/{repo}"
+
+          release = None
+          try:
+              request = urllib.request.Request(f"{api_base}/releases/tags/{tag}", headers=headers)
+              with urllib.request.urlopen(request) as response:
+                  release = json.load(response)
+          except urllib.error.HTTPError as error:
+              if error.code != 404:
+                  raise
+
+          payload = json.dumps({
+              "tag_name": tag,
+              "target_commitish": os.environ["GITHUB_SHA"],
+              "name": release_name,
+              "body": body,
+              "draft": False,
+              "prerelease": False,
+          }).encode("utf-8")
+
+          if release is None:
+              request = urllib.request.Request(
+                  f"{api_base}/releases",
+                  data=payload,
+                  headers={**headers, "Content-Type": "application/json"},
+                  method="POST",
+              )
+              with urllib.request.urlopen(request) as response:
+                  release = json.load(response)
+          else:
+              request = urllib.request.Request(
+                  f"{api_base}/releases/{release['id']}",
+                  data=payload,
+                  headers={**headers, "Content-Type": "application/json"},
+                  method="PATCH",
+              )
+              with urllib.request.urlopen(request) as response:
+                  release = json.load(response)
+
+          for asset in release.get("assets", []):
+              if asset.get("name") == zip_name:
+                  request = urllib.request.Request(
+                      f"https://api.github.com/repos/{repo}/releases/assets/{asset['id']}",
+                      headers=headers,
+                      method="DELETE",
+                  )
+                  with urllib.request.urlopen(request):
+                      pass
+                  break
+
+          upload_url = release["upload_url"].split("{", 1)[0] + f"?name={urllib.parse.quote(zip_name)}"
+          asset_bytes = upload_path.read_bytes()
+          request = urllib.request.Request(
+              upload_url,
+              data=asset_bytes,
+              headers={
+                  **headers,
+                  "Content-Type": "application/zip",
+                  "Content-Length": str(len(asset_bytes)),
+              },
+              method="POST",
+          )
+          with urllib.request.urlopen(request) as response:
+              asset = json.load(response)
+
+          print(release["html_url"])
+          print(asset["browser_download_url"])
+          PY

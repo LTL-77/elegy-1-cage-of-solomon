@@ -1,0 +1,71 @@
+name: Build Windows Artifact
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    runs-on: ubuntu-latest
+
+    env:
+      GODOT_VERSION: 4.6.2
+      GODOT_STATUS: stable
+      GODOT_VERSION_DIR: 4.6.2.stable
+      BUILD_NAME: Elegy-1-Cage-of-Solomon
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Godot and export templates
+        shell: bash
+        run: |
+          set -euo pipefail
+          ARCHIVE_VERSION="${GODOT_VERSION}-${GODOT_STATUS}"
+          GODOT_ZIP="Godot_v${ARCHIVE_VERSION}_linux.x86_64.zip"
+          TEMPLATE_TPZ="Godot_v${ARCHIVE_VERSION}_export_templates.tpz"
+          GODOT_BASE_URL="https://github.com/godotengine/godot-builds/releases/download/${ARCHIVE_VERSION}"
+
+          curl -L --fail --retry 3 --output "${RUNNER_TEMP}/${GODOT_ZIP}" "${GODOT_BASE_URL}/${GODOT_ZIP}"
+          curl -L --fail --retry 3 --output "${RUNNER_TEMP}/${TEMPLATE_TPZ}" "${GODOT_BASE_URL}/${TEMPLATE_TPZ}"
+
+          mkdir -p "${RUNNER_TEMP}/godot"
+          unzip -q "${RUNNER_TEMP}/${GODOT_ZIP}" -d "${RUNNER_TEMP}/godot"
+          chmod +x "${RUNNER_TEMP}/godot/Godot_v${ARCHIVE_VERSION}_linux.x86_64"
+
+          mkdir -p "${HOME}/.local/share/godot/export_templates/${GODOT_VERSION_DIR}"
+          unzip -q "${RUNNER_TEMP}/${TEMPLATE_TPZ}" -d "${HOME}/.local/share/godot/export_templates/${GODOT_VERSION_DIR}"
+
+      - name: Export Windows build
+        shell: bash
+        run: |
+          set -euo pipefail
+          ARCHIVE_VERSION="${GODOT_VERSION}-${GODOT_STATUS}"
+          mkdir -p build/windows
+          "${RUNNER_TEMP}/godot/Godot_v${ARCHIVE_VERSION}_linux.x86_64" \
+            --headless \
+            --path "${GITHUB_WORKSPACE}" \
+            --export-release "Windows Desktop" \
+            "build/windows/${BUILD_NAME}.exe"
+
+      - name: Package Windows build
+        shell: bash
+        run: |
+          set -euo pipefail
+          ARTIFACT_NAME="${BUILD_NAME}-windows-${GITHUB_SHA::7}.zip"
+          cd build/windows
+          zip -q "../${ARTIFACT_NAME}" "${BUILD_NAME}.exe" "${BUILD_NAME}.pck"
+          echo "ARTIFACT_NAME=${ARTIFACT_NAME}" >> "${GITHUB_ENV}"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.BUILD_NAME }}-windows-${{ github.sha }}
+          path: build/${{ env.ARTIFACT_NAME }}
+          if-no-files-found: error
