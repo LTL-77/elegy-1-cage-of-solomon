@@ -5,6 +5,7 @@ signal completed
 @onready var _background_image: TextureRect = %BackgroundImage
 @onready var _dim_overlay: ColorRect = %DimOverlay
 @onready var _panel_layer: Control = %PanelLayer
+@onready var _dock_panel: PanelContainer = %DockPanel
 @onready var _title_label: Label = %TitleLabel
 @onready var _description_label: RichTextLabel = %DescriptionLabel
 @onready var _options_container: VBoxContainer = %OptionsContainer
@@ -28,7 +29,7 @@ func setup(step: Dictionary, background_image_path: String = "") -> void:
 	_clean_view = false
 	_panel_layer.visible = true
 	_dim_overlay.visible = true
-	_title_label.text = str(step.get("title", "互动"))
+	_title_label.text = str(step.get("title", "交互"))
 	_description_label.text = _format_rich_text(str(step.get("description", "")))
 	_result_label.text = "选择一个可调查的点。"
 	_continue_button.disabled = true
@@ -68,6 +69,8 @@ func _on_option_pressed(option: Dictionary, button: Button) -> void:
 	button.disabled = true
 	_result_label.text = _format_rich_text(str(option.get("result", "")))
 	_continue_button.disabled = _visited.size() < _required_inspections
+	_play_button_feedback(button)
+	_play_panel_feedback()
 	if _continue_button.disabled:
 		call_deferred("_focus_first_option")
 	else:
@@ -130,3 +133,22 @@ func _format_rich_text(text: String) -> String:
 	formatted = formatted.replace("[b]", "[color=#e3c58a]")
 	formatted = formatted.replace("[/b]", "[/color]")
 	return formatted
+
+
+func _play_button_feedback(button: Button) -> void:
+	if button == null:
+		return
+	button.scale = Vector2.ONE
+	var tween := create_tween()
+	tween.tween_property(button, "scale", Vector2(1.04, 1.04), 0.06)
+	tween.tween_property(button, "scale", Vector2.ONE, 0.08)
+
+
+func _play_panel_feedback() -> void:
+	if _dock_panel == null:
+		return
+	var base_position := _dock_panel.position
+	var tween := create_tween()
+	tween.tween_property(_dock_panel, "position", base_position + Vector2(10.0, 0.0), 0.05)
+	tween.tween_property(_dock_panel, "position", base_position + Vector2(-6.0, 0.0), 0.06)
+	tween.tween_property(_dock_panel, "position", base_position, 0.05)

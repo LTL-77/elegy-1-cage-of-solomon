@@ -301,6 +301,9 @@ func _start_event(entity: Area2D) -> void:
 	_event_index = 0
 	_event_title_label.text = str(entity_data.get("label", "事件"))
 	_event_panel.visible = not _clean_view
+	_pulse_entity(entity)
+	_play_panel_shake(_event_panel)
+	_play_camera_shake(16.0)
 	_show_event_line()
 	if not _clean_view:
 		_event_continue_button.grab_focus()
@@ -322,6 +325,7 @@ func _finish_event() -> void:
 	var entity_id := str(entity_data.get("id", ""))
 	_visited_entities[entity_id] = true
 	_result_label.text = _format_rich_text(str(entity_data.get("result_summary", _event_lines.back() if not _event_lines.is_empty() else "")))
+	_play_panel_shake(_bottom_panel)
 	_dialog_open = false
 	_event_panel.visible = false
 	_bottom_panel.visible = not _clean_view
@@ -340,6 +344,34 @@ func _finish_event() -> void:
 func _on_event_continue_button_pressed() -> void:
 	_event_index += 1
 	_show_event_line()
+
+
+func _pulse_entity(entity: Area2D) -> void:
+	if entity == null:
+		return
+	var tween := create_tween()
+	tween.tween_property(entity, "scale", Vector2(1.06, 1.06), 0.06)
+	tween.tween_property(entity, "scale", Vector2.ONE, 0.1)
+
+
+func _play_panel_shake(panel: Control) -> void:
+	if panel == null:
+		return
+	var base_position := panel.position
+	var tween := create_tween()
+	tween.tween_property(panel, "position", base_position + Vector2(10.0, 0.0), 0.04)
+	tween.tween_property(panel, "position", base_position + Vector2(-8.0, 0.0), 0.05)
+	tween.tween_property(panel, "position", base_position, 0.05)
+
+
+func _play_camera_shake(amount: float) -> void:
+	if _camera == null:
+		return
+	_camera.offset = Vector2.ZERO
+	var tween := create_tween()
+	tween.tween_property(_camera, "offset", Vector2(amount, 0.0), 0.04)
+	tween.tween_property(_camera, "offset", Vector2(-amount * 0.75, 0.0), 0.05)
+	tween.tween_property(_camera, "offset", Vector2.ZERO, 0.06)
 
 
 func _update_progress() -> void:

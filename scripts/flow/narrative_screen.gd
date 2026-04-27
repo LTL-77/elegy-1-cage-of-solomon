@@ -5,6 +5,7 @@ signal completed
 @onready var _background_image: TextureRect = %BackgroundImage
 @onready var _dim_overlay: ColorRect = %DimOverlay
 @onready var _panel_layer: Control = %PanelLayer
+@onready var _dock_panel: PanelContainer = %DockPanel
 @onready var _title_label: Label = %TitleLabel
 @onready var _body_label: RichTextLabel = %BodyLabel
 @onready var _continue_button: Button = %ContinueButton
@@ -26,6 +27,7 @@ func setup(title: String, lines: Array, background_image_path: String = "") -> v
 	_line_index = 0
 	_clean_view = false
 	_panel_layer.visible = true
+	_dim_overlay.visible = true
 	_set_background(background_image_path)
 	_show_current_line()
 	call_deferred("_focus_continue")
@@ -49,6 +51,7 @@ func _show_current_line() -> void:
 	_continue_button.text = "继续"
 	if _line_index == _lines.size() - 1:
 		_continue_button.text = "进入下一步"
+	_play_feedback()
 
 
 func _on_continue_button_pressed() -> void:
@@ -108,3 +111,16 @@ func _format_rich_text(text: String) -> String:
 	formatted = formatted.replace("[b]", "[color=#e3c58a]")
 	formatted = formatted.replace("[/b]", "[/color]")
 	return formatted
+
+
+func _play_feedback() -> void:
+	if _dock_panel == null:
+		return
+	var base_position := _dock_panel.position
+	var tween := create_tween()
+	tween.tween_property(_dock_panel, "position", base_position + Vector2(10.0, 0.0), 0.05)
+	tween.tween_property(_dock_panel, "position", base_position + Vector2(-6.0, 0.0), 0.06)
+	tween.tween_property(_dock_panel, "position", base_position, 0.05)
+	_dock_panel.modulate = Color(1.0, 0.98, 0.9, 1.0)
+	var color_tween := create_tween()
+	color_tween.tween_property(_dock_panel, "modulate", Color.WHITE, 0.16)

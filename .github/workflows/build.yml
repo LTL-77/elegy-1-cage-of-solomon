@@ -39,8 +39,10 @@ jobs:
           unzip -q "${RUNNER_TEMP}/${GODOT_ZIP}" -d "${RUNNER_TEMP}/godot"
           chmod +x "${RUNNER_TEMP}/godot/Godot_v${ARCHIVE_VERSION}_linux.x86_64"
 
+          mkdir -p "${RUNNER_TEMP}/templates"
+          unzip -q "${RUNNER_TEMP}/${TEMPLATE_TPZ}" -d "${RUNNER_TEMP}/templates"
           mkdir -p "${HOME}/.local/share/godot/export_templates/${GODOT_VERSION_DIR}"
-          unzip -q "${RUNNER_TEMP}/${TEMPLATE_TPZ}" -d "${HOME}/.local/share/godot/export_templates/${GODOT_VERSION_DIR}"
+          cp -R "${RUNNER_TEMP}/templates/templates/." "${HOME}/.local/share/godot/export_templates/${GODOT_VERSION_DIR}/"
 
       - name: Export Windows build
         shell: bash

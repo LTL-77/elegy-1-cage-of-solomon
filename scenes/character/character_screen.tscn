@@ -28,24 +28,25 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
 
 [node name="RootPanel" type="PanelContainer" parent="RootMargin"]
 layout_mode = 2
 
 [node name="MainMargin" type="MarginContainer" parent="RootMargin/RootPanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
 [node name="MainVBox" type="VBoxContainer" parent="RootMargin/RootPanel/MainMargin"]
 layout_mode = 2
-theme_override_constants/separation = 14
+size_flags_vertical = 3
+theme_override_constants/separation = 12
 
 [node name="HeaderRow" type="HBoxContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox"]
 layout_mode = 2
@@ -69,7 +70,7 @@ theme_override_constants/separation = 16
 
 [node name="ListPanel" type="PanelContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow"]
 layout_mode = 2
-custom_minimum_size = Vector2(240, 0)
+custom_minimum_size = Vector2(220, 0)
 
 [node name="ListMargin" type="MarginContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/ListPanel"]
 layout_mode = 2
@@ -91,58 +92,63 @@ size_flags_vertical = 3
 
 [node name="DetailMargin" type="MarginContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
 
-[node name="DetailVBox" type="VBoxContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin"]
+[node name="DetailScroll" type="ScrollContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="DetailVBox" type="VBoxContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 10
 
-[node name="NameLabel" type="Label" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox"]
+[node name="NameLabel" type="Label" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 28
 text = "角色名"
 
-[node name="ProfessionLabel" type="Label" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox"]
+[node name="ProfessionLabel" type="Label" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "职业"
 
-[node name="BlessingLabel" type="Label" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox"]
+[node name="BlessingLabel" type="Label" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "眷顾"
 
-[node name="UnderstandingLabel" type="Label" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox"]
+[node name="UnderstandingLabel" type="Label" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "理解阶段"
 
-[node name="InversionLabel" type="Label" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox"]
+[node name="InversionLabel" type="Label" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "是否反演"
 
-[node name="InfoRow" type="HBoxContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox"]
+[node name="InfoRow" type="HBoxContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="PortraitPanel" type="PanelContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox/InfoRow"]
+[node name="PortraitPanel" type="PanelContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox/InfoRow"]
 layout_mode = 2
 custom_minimum_size = Vector2(220, 180)
 
-[node name="PortraitMargin" type="MarginContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox/InfoRow/PortraitPanel"]
+[node name="PortraitMargin" type="MarginContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox/InfoRow/PortraitPanel"]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="PortraitLabel" type="RichTextLabel" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox/InfoRow/PortraitPanel/PortraitMargin"]
+[node name="PortraitLabel" type="RichTextLabel" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox/InfoRow/PortraitPanel/PortraitMargin"]
 unique_name_in_owner = true
 layout_mode = 2
 fit_content = true
@@ -150,9 +156,9 @@ scroll_active = false
 bbcode_enabled = true
 text = "立绘"
 
-[node name="SummaryLabel" type="RichTextLabel" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox/InfoRow"]
+[node name="SummaryLabel" type="RichTextLabel" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox/InfoRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 180)
+custom_minimum_size = Vector2(320, 180)
 layout_mode = 2
 size_flags_horizontal = 3
 fit_content = true
@@ -160,7 +166,7 @@ scroll_active = false
 bbcode_enabled = true
 text = "角色摘要"
 
-[node name="BioLabel" type="RichTextLabel" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox"]
+[node name="BioLabel" type="RichTextLabel" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
@@ -169,11 +175,11 @@ scroll_active = false
 bbcode_enabled = true
 text = "角色背景"
 
-[node name="StatsRow" type="HBoxContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox"]
+[node name="StatsRow" type="HBoxContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="StatsLabel" type="RichTextLabel" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox/StatsRow"]
+[node name="StatsLabel" type="RichTextLabel" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox/StatsRow"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(240, 120)
 layout_mode = 2
@@ -183,9 +189,9 @@ scroll_active = false
 bbcode_enabled = true
 text = "明面属性"
 
-[node name="HiddenLabel" type="RichTextLabel" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox/StatsRow"]
+[node name="HiddenLabel" type="RichTextLabel" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox/StatsRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 120)
+custom_minimum_size = Vector2(240, 120)
 layout_mode = 2
 size_flags_horizontal = 3
 fit_content = true
@@ -193,44 +199,42 @@ scroll_active = false
 bbcode_enabled = true
 text = "隐藏属性"
 
-[node name="EchoRow" type="HBoxContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox"]
+[node name="EchoRow" type="HBoxContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
 layout_mode = 2
-size_flags_vertical = 3
 theme_override_constants/separation = 12
 
-[node name="EchoListPanel" type="PanelContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox/EchoRow"]
+[node name="EchoListPanel" type="PanelContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox/EchoRow"]
 layout_mode = 2
-custom_minimum_size = Vector2(250, 0)
+custom_minimum_size = Vector2(250, 260)
 
-[node name="EchoListMargin" type="MarginContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox/EchoRow/EchoListPanel"]
+[node name="EchoListMargin" type="MarginContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox/EchoRow/EchoListPanel"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="EchoList" type="ItemList" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox/EchoRow/EchoListPanel/EchoListMargin"]
+[node name="EchoList" type="ItemList" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox/EchoRow/EchoListPanel/EchoListMargin"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 select_mode = 0
 
-[node name="EchoDetailPanel" type="PanelContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox/EchoRow"]
+[node name="EchoDetailPanel" type="PanelContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox/EchoRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
 
-[node name="EchoDetailMargin" type="MarginContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox/EchoRow/EchoDetailPanel"]
+[node name="EchoDetailMargin" type="MarginContainer" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox/EchoRow/EchoDetailPanel"]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="EchoDetailLabel" type="RichTextLabel" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox/EchoRow/EchoDetailPanel/EchoDetailMargin"]
+[node name="EchoDetailLabel" type="RichTextLabel" parent="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox/EchoRow/EchoDetailPanel/EchoDetailMargin"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 260)
 layout_mode = 2
-size_flags_vertical = 3
 bbcode_enabled = true
 scroll_active = true
 text = "回响详情"
@@ -240,5 +244,5 @@ layout_mode = 2
 text = "方向键切换角色，Esc 或关闭按钮返回。"
 
 [connection signal="item_selected" from="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/ListPanel/ListMargin/CharacterList" to="." method="_on_character_list_item_selected"]
-[connection signal="item_selected" from="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailVBox/EchoRow/EchoListPanel/EchoListMargin/EchoList" to="." method="_on_echo_list_item_selected"]
+[connection signal="item_selected" from="RootMargin/RootPanel/MainMargin/MainVBox/ContentRow/DetailPanel/DetailMargin/DetailScroll/DetailVBox/EchoRow/EchoListPanel/EchoListMargin/EchoList" to="." method="_on_echo_list_item_selected"]
 [connection signal="pressed" from="RootMargin/RootPanel/MainMargin/MainVBox/HeaderRow/CloseButton" to="." method="_on_close_button_pressed"]
