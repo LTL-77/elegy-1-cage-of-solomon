@@ -85,7 +85,23 @@ func regain_focus() -> void:
 		_event_continue_button.grab_focus()
 
 
-func setup(step: Dictionary) -> void:
+func build_state_snapshot() -> Dictionary:
+	var visited_ids: Array[String] = []
+	for key in _visited_entities.keys():
+		if bool(_visited_entities.get(key, false)):
+			visited_ids.append(str(key))
+
+	var player_position := [0.0, 0.0]
+	if is_instance_valid(_player):
+		player_position = [_player.position.x, _player.position.y]
+
+	return {
+		"visited_entity_ids": visited_ids,
+		"player_position": player_position
+	}
+
+
+func setup(step: Dictionary, saved_state: Dictionary = {}) -> void:
 	_step_data = step.duplicate(true)
 	_required_inspections = int(step.get("required_inspections", 0))
 	_visited_entities.clear()
@@ -127,9 +143,11 @@ func setup(step: Dictionary) -> void:
 	_build_background_scene(str(step.get("scene_style", _map_theme.get("scene_style", "gate"))))
 	_build_props(step.get("map_props", []))
 	_build_entities(step.get("map_entities", []))
+	_restore_state(saved_state)
 	_update_layout()
 	if is_instance_valid(_player):
-		_player.position = _player_anchor.position
+		if not saved_state.has("player_position"):
+			_player.position = _player_anchor.position
 		_update_camera_limits()
 		if is_instance_valid(_camera):
 			_camera.reset_smoothing()
@@ -187,6 +205,17 @@ func _build_entities(source_entities: Array) -> void:
 
 		_hotspot_layer.add_child(root)
 		_entities.append(root)
+
+
+func _restore_state(saved_state: Dictionary) -> void:
+	_visited_entities.clear()
+	for visited_id in saved_state.get("visited_entity_ids", []):
+		_visited_entities[str(visited_id)] = true
+
+	if is_instance_valid(_player) and saved_state.has("player_position"):
+		var player_position: Array = saved_state.get("player_position", [])
+		if player_position.size() >= 2:
+			_player.position = Vector2(float(player_position[0]), float(player_position[1]))
 
 
 func _build_props(source_props: Array) -> void:
