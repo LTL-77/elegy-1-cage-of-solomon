@@ -46,12 +46,19 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "垂直切片原型"
 
+[node name="VersionLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.760784, 0.713726, 0.556863, 1)
+theme_override_font_sizes/font_size = 14
+text = "demo v0.0.0"
+
 [node name="DescriptionLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 180)
 layout_mode = 2
 bbcode_enabled = true
 fit_content = true
-text = "当前原型围绕北遥事件展开，包含标题页、叙事演出、横版地图调查与单人回合制战斗。[br]现在也可以在任意流程中打开角色档案，查看角色属性与回响。"
+text = "当前原型围绕北遥事件展开，包含标题页、叙事演出、俯视地图调查与单人回合制战斗。[br]现在也可以在任意流程中打开角色档案，查看角色属性与回响。"
 
 [node name="ButtonRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

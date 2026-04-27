@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Elegy -1: Cage of Solomon"
+config/version="0.2.0"
 run/main_scene="uid://ccddtem2y40km"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"

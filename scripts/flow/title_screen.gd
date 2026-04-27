@@ -7,9 +7,11 @@ signal quit_requested
 
 @onready var _new_game_button: Button = %NewGameButton
 @onready var _load_button: Button = %LoadButton
+@onready var _version_label: Label = %VersionLabel
 
 
 func _ready() -> void:
+	_apply_version_label()
 	call_deferred("_focus_default_button")
 
 
@@ -30,6 +32,11 @@ func _focus_default_button() -> void:
 
 func regain_focus() -> void:
 	call_deferred("_focus_default_button")
+
+
+func _apply_version_label() -> void:
+	var version_text := str(ProjectSettings.get_setting("application/config/version", "dev"))
+	_version_label.text = "demo v%s" % version_text
 
 
 func _on_new_game_button_pressed() -> void:
