@@ -48,15 +48,15 @@ theme_override_constants/separation = 14
 [node name="BattleNameLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 26
 text = "战斗"
 
 [node name="StatusLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 bbcode_enabled = true
-fit_content = true
+fit_content = false
 scroll_active = false
 
 [node name="StagePanel" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
@@ -65,22 +65,22 @@ size_flags_vertical = 3
 
 [node name="StageMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/StagePanel"]
 offset_right = 1224.0
-offset_bottom = 350.0
+offset_bottom = 320.0
 theme_override_constants/margin_left = 18
-theme_override_constants/margin_top = 16
+theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 18
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_bottom = 12
 
 [node name="StageVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/StagePanel/StageMargin"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 10
+theme_override_constants/separation = 8
 
 [node name="FeedbackLabel" type="Label" parent="MarginContainer/VBoxContainer/StagePanel/StageMargin/StageVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 horizontal_alignment = 1
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 18
 text = "对峙开始"
 
 [node name="BattlefieldPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/StagePanel/StageMargin/StageVBox"]
@@ -89,7 +89,7 @@ size_flags_vertical = 3
 
 [node name="BattlefieldRoot" type="Control" parent="MarginContainer/VBoxContainer/StagePanel/StageMargin/StageVBox/BattlefieldPanel"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 250)
+custom_minimum_size = Vector2(0, 210)
 layout_mode = 2
 
 [node name="BattlefieldGlow" type="ColorRect" parent="MarginContainer/VBoxContainer/StagePanel/StageMargin/StageVBox/BattlefieldPanel/BattlefieldRoot"]
@@ -201,24 +201,24 @@ alignment = 2
 
 [node name="CombatInfo" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StagePanel/StageMargin/StageVBox"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 16
 
 [node name="PlayerLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/StagePanel/StageMargin/StageVBox/CombatInfo"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(360, 116)
+custom_minimum_size = Vector2(320, 88)
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
-fit_content = true
+fit_content = false
 scroll_active = false
 
 [node name="EnemyLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/StagePanel/StageMargin/StageVBox/CombatInfo"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(420, 116)
+custom_minimum_size = Vector2(360, 88)
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
-fit_content = true
+fit_content = false
 scroll_active = false
 
 [node name="ActionPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
@@ -226,44 +226,44 @@ layout_mode = 2
 
 [node name="ActionMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/ActionPanel"]
 offset_right = 1224.0
-offset_bottom = 156.0
+offset_bottom = 142.0
 theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 12
+theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_bottom = 10
 
 [node name="ActionRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ActionPanel/ActionMargin"]
 layout_mode = 2
 alignment = 1
-theme_override_constants/separation = 18
+theme_override_constants/separation = 14
 
 [node name="PhysicalAttackButton" type="Button" parent="MarginContainer/VBoxContainer/ActionPanel/ActionMargin/ActionRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(104, 104)
+custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 text = "囚印"
 
 [node name="SpiritAttackButton" type="Button" parent="MarginContainer/VBoxContainer/ActionPanel/ActionMargin/ActionRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(104, 104)
+custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 text = "灵击"
 
 [node name="SkillOneButton" type="Button" parent="MarginContainer/VBoxContainer/ActionPanel/ActionMargin/ActionRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(104, 104)
+custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 text = "缄束"
 
 [node name="SkillTwoButton" type="Button" parent="MarginContainer/VBoxContainer/ActionPanel/ActionMargin/ActionRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(104, 104)
+custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 text = "永隔"
 
 [node name="SkillThreeButton" type="Button" parent="MarginContainer/VBoxContainer/ActionPanel/ActionMargin/ActionRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(104, 104)
+custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 text = "收拢"
 
@@ -272,18 +272,19 @@ layout_mode = 2
 
 [node name="LogMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/LogPanel"]
 offset_right = 1224.0
-offset_bottom = 152.0
+offset_bottom = 126.0
 theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 14
+theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 14
+theme_override_constants/margin_bottom = 10
 
 [node name="LogLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/LogPanel/LogMargin"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 124)
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 bbcode_enabled = true
-scroll_active = false
+fit_content = false
+scroll_active = true
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ActionPanel/ActionMargin/ActionRow/PhysicalAttackButton" to="." method="_on_physical_attack_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ActionPanel/ActionMargin/ActionRow/SpiritAttackButton" to="." method="_on_spirit_attack_button_pressed"]

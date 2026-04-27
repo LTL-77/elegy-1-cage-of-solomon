@@ -152,6 +152,8 @@ func _update_ui() -> void:
 	_player_label.text = _format_unit(_player)
 	_enemy_label.text = _format_enemy_block()
 	_log_label.text = "\n".join(_log_lines)
+	if _log_lines.size() > 0:
+		_log_label.scroll_to_line(_log_lines.size() - 1)
 	_status_label.text = _build_status_text()
 	_refresh_enemy_formation()
 
