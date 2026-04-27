@@ -22,7 +22,7 @@ The current Windows demo build can be downloaded from the repository's latest [R
 
 Current packaged build:
 
-- `Elegy-1-Cage-of-Solomon-windows-v0.1.0.zip`
+- `Elegy-1-Cage-of-Solomon-windows-v0.2.0.zip`
 
 After downloading:
 

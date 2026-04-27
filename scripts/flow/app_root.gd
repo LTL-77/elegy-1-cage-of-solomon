@@ -50,6 +50,12 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("character_menu") and not event.is_echo():
 		_open_character_menu(_selected_character_id())
 		get_viewport().set_input_as_handled()
+		return
+
+	if event.is_action_pressed("clean_view") and not event.is_echo():
+		if is_instance_valid(_current_screen) and _current_screen.has_method("_toggle_clean_view"):
+			_current_screen.call("_toggle_clean_view")
+			get_viewport().set_input_as_handled()
 
 
 func _can_use_fullscreen() -> bool:
@@ -156,19 +162,19 @@ func _run_current_step() -> void:
 
 func _show_narrative(step: Dictionary) -> void:
 	_swap_screen(NARRATIVE_SCENE.instantiate())
-	_current_screen.setup(step.get("title", ""), step.get("lines", []))
+	_current_screen.setup(step.get("title", ""), step.get("lines", []), _resolve_step_background(_current_step_index))
 	_current_screen.completed.connect(_complete_step)
 
 
 func _show_unlock_narrative(step: Dictionary) -> void:
 	_swap_screen(NARRATIVE_SCENE.instantiate())
-	_current_screen.setup(step.get("title", ""), step.get("lines", []))
+	_current_screen.setup(step.get("title", ""), step.get("lines", []), _resolve_step_background(_current_step_index))
 	_current_screen.completed.connect(_run_current_step)
 
 
 func _show_interaction(step: Dictionary) -> void:
 	_swap_screen(INTERACTION_SCENE.instantiate())
-	_current_screen.setup(step)
+	_current_screen.setup(step, _resolve_step_background(_current_step_index))
 	_current_screen.completed.connect(_complete_step)
 
 
@@ -353,6 +359,28 @@ func _find_character_by_id(character_id: String) -> Dictionary:
 		if str(character_dict.get("id", "")) == character_id:
 			return character_dict
 	return {}
+
+
+func _resolve_step_background(step_index: int) -> String:
+	if step_index >= 0 and step_index < _flow_steps.size():
+		var current_step: Dictionary = _flow_steps[step_index]
+		var direct_background := str(current_step.get("background_image", ""))
+		if not direct_background.is_empty():
+			return direct_background
+
+	for index in range(step_index, -1, -1):
+		var previous_step: Dictionary = _flow_steps[index]
+		var previous_background := str(previous_step.get("background_image", ""))
+		if not previous_background.is_empty():
+			return previous_background
+
+	for index in range(step_index + 1, _flow_steps.size()):
+		var next_step: Dictionary = _flow_steps[index]
+		var next_background := str(next_step.get("background_image", ""))
+		if not next_background.is_empty():
+			return next_background
+
+	return ""
 
 
 func _has_save() -> bool:

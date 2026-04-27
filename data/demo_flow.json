@@ -3,24 +3,21 @@
     {
       "id": "opening",
       "type": "narrative",
-      "title": "序章",
-      "understanding_rewards": [
-        {
-          "character_id": "yndeirs",
-          "amount": 10
-        }
-      ],
+      "title": "废矿没有旗",
       "lines": [
-        "2439年，北遥仍挂着帝国的旗，但城里的每一道命令都已经带上了腐烂的气味。",
-        "因第尔斯回到这里，不是为了归乡，也不是为了接受新的差遣。他来，是为了确认一件事：北遥还值不值得继续活着。",
-        "这座城是帝国北境的钉子，也是许多人喉咙里的刺。今夜之后，它至少会少掉一位主人。"
+        "2439 年，北遥之外的旧矿洞里，反叛还没有长出统一的旗。这里先被看见的不是誓词，而是伤员、偷来的粮、断掉的镣铐，以及一群不肯照帝国安排去死的人。",
+        "第三道木梁在夜里断了。没有砸死人，却堵死了原本留给伤员撤离的支道。矿洞里先是一阵沉默，随后才有人低声骂了一句。北遥的夜总是这样，把侥幸和坏消息缠在一起，让人连庆幸都不敢庆得太早。",
+        "因第尔斯坐在废门旁，火光照不到他脸上。兵略年走到他面前，没有谈理想，也没有讲大义，只递出一件足够干净的交换：[b]“我给你一扇门。你替我关一扇。”[/b]",
+        "[b]“关谁。”[/b]\n\n[b]“所罗门北遥。”[/b]\n\n[b]“关到什么程度。”[/b]\n\n兵略年看着他，声音没有起伏。\n\n[b]“关到他会死。”[/b]"
       ]
     },
     {
-      "id": "arrival",
+      "id": "mine_staging",
       "type": "map",
-      "title": "北遥城门",
-      "description": "上下左右移动，先完成调查，再接近巡逻兵触发战前交互。",
+      "title": "废矿据点",
+      "description": "调查废矿里的塌道、门锚和作战安排。这里不是誓师，而是把命一条条写进计划里。",
+      "scene_style": "mine",
+      "background_image": "res://art/maps/mine_outpost_v1.png",
       "understanding_rewards": [
         {
           "character_id": "yndeirs",
@@ -29,129 +26,581 @@
       ],
       "required_inspections": 2,
       "map_bounds": {
-        "left": 96,
-        "right": 1184,
-        "top": 330,
-        "bottom": 500
+        "left": 120,
+        "right": 1410,
+        "top": 120,
+        "bottom": 960
       },
+      "map_theme": {
+        "backdrop_color": [
+          0.07,
+          0.08,
+          0.09,
+          1.0
+        ],
+        "distant_glow_color": [
+          0.28,
+          0.19,
+          0.14,
+          0.18
+        ],
+        "far_wall_color": [
+          0.12,
+          0.12,
+          0.13,
+          1.0
+        ],
+        "main_gate_color": [
+          0.17,
+          0.16,
+          0.16,
+          1.0
+        ],
+        "gate_seam_color": [
+          0.05,
+          0.05,
+          0.06,
+          1.0
+        ],
+        "ground_color": [
+          0.19,
+          0.17,
+          0.16,
+          1.0
+        ],
+        "road_stripe_color": [
+          0.35,
+          0.28,
+          0.24,
+          0.18
+        ],
+        "show_road_stripe": false,
+        "show_main_gate": false,
+        "gate_x_ratio": 0.14,
+        "gate_width": 124.0,
+        "gate_height": 302.0,
+        "gate_top": 140.0,
+        "wall_top": 118.0,
+        "wall_height": 264.0,
+        "ground_height": 210.0,
+        "player_anchor_x": 760.0,
+        "player_anchor_y": 918.0,
+        "top_panel_width": 0.58,
+        "background_scale": 1.0
+      },
+      "map_props": [],
       "map_entities": [
         {
-          "id": "watchtower",
+          "id": "collapsed_shaft",
           "type": "inspect",
           "trigger_mode": "interact",
-          "label": "哨塔",
-          "x": 292,
-          "y": 480,
-          "radius": 60,
+          "prop_style": "rubble",
+          "show_visual": false,
+          "show_label": false,
+          "label": "塌道",
+          "x": 235,
+          "y": 168,
+          "radius": 88,
           "event_lines": [
-            "哨塔上的旗还悬得很高，塔下的士兵却全靠绷紧肩膀维持着帝国最后一点体面。"
+            "塌掉的支道堵住了原本留给伤员的撤离路。这里没有人争论谁负责，因为北遥边缘的坏消息从来不会只属于一个人。",
+            "你能看出它不是自然塌落。木梁早就撑不到冬末，只是今晚恰好先断在最坏的位置。"
           ],
-          "result_summary": "你看清了哨塔上的军纪。"
+          "result_summary": "你确认了撤离路线已经变窄。"
         },
         {
-          "id": "crowd",
+          "id": "engraver",
           "type": "inspect",
           "trigger_mode": "interact",
-          "label": "人群",
-          "x": 610,
+          "prop_style": "anchor",
+          "show_visual": false,
+          "show_label": false,
+          "label": "刻字的",
+          "x": 775,
+          "y": 388,
+          "radius": 82,
+          "event_lines": [
+            "高灵性共鸣者正趴在石板上修门锚。符文粉里混着死人留下的血，骨针每落下一笔，他的手就抖一下。",
+            "他没有眷顾，只能借铭文去碰灵性。拨得准，是热；拨不准，先烧的是自己。废矿里的人把这种代价也算进了今夜的成本。"
+          ],
+          "result_summary": "你看见了门锚如何靠血和手稳住。"
+        },
+        {
+          "id": "decoy_team",
+          "type": "inspect",
+          "trigger_mode": "interact",
+          "prop_style": "crate",
+          "show_visual": false,
+          "show_label": false,
+          "label": "诱饵队",
+          "x": 1130,
+          "y": 720,
+          "radius": 92,
+          "event_lines": [
+            "东仓诱饵队背着火油和爆符，没人送行。跑得最快的人被派去烧最先回不来的地方，这在废矿里已经算得上合理。",
+            "他们看你的眼神里没有敬意，只有怨、怕，以及一点不肯承认的期待。眷顾者最好真能把人关住，不然这些命就只剩白白消耗。"
+          ],
+          "result_summary": "你记住了今夜是靠谁去换时间。"
+        },
+        {
+          "id": "binglue_nian",
+          "type": "inspect",
+          "trigger_mode": "interact",
+          "prop_style": "figure",
+          "show_visual": false,
+          "show_label": false,
+          "label": "兵略年",
+          "x": 430,
           "y": 500,
-          "radius": 60,
-          "event_lines": [
-            "街上的人说话都只剩半口气，像是害怕哪一句话先落地，哪一句话就会先招来军靴。"
-          ],
-          "result_summary": "你听见了城里压低的声音。"
-        },
-        {
-          "id": "orders",
-          "type": "inspect",
-          "trigger_mode": "interact",
-          "label": "告示",
-          "x": 860,
-          "y": 470,
-          "radius": 60,
-          "event_lines": [
-            "告示上写着整肃、安定与忠诚。字迹很新，纸也很新，只有下面干掉的血不是新的。"
-          ],
-          "result_summary": "你确认了帝国正在用新的字句覆盖旧的血迹。"
-        },
-        {
-          "id": "patrol_block",
-          "type": "enemy",
-          "trigger_mode": "interact",
-          "label": "巡逻兵",
-          "x": 1038,
-          "y": 470,
-          "radius": 74,
+          "radius": 88,
           "requires_inspections": true,
           "completes_step": true,
           "event_lines": [
-            "巡逻兵已经注意到了你。",
-            "他们先看见的不是脸，而是你停得太稳的脚步和不愿低下去的眼神。",
-            "再往前走，就不会只是调查了。"
+            "兵略年把半张北遥府邸图递到你面前，只报目标、时间、门锚和出口。他不谈理想，也不谈誓言。",
+            "你要找的押送线索在继名室侧库；他要你今夜关住所罗门北遥。不是请托，是交换。",
+            "这不是同盟成立，只是一扇门被谈妥了。"
           ],
-          "result_summary": "巡逻兵拦住了去路。"
+          "result_summary": "你和兵略年把今夜的契约说定了。"
         }
       ]
     },
     {
-      "id": "tutorial_battle_intro",
+      "id": "crossing_brief",
       "type": "narrative",
-      "title": "第一次摩擦",
+      "title": "穿门之前",
       "lines": [
-        "北遥的巡逻兵先一步截住了去路。他们未必认得因第尔斯，但他们认得一种人：不服从命令的人。",
-        "这一战不是为了展示英雄，而是为了建立规则。因第尔斯擅长把敌人的行动一层层锁死，但灵性过低会枯竭，过高又会崩解。"
+        "第一门锚会把你送到货运闸门外的旧排水槽。兵略年先把最坏的情况说在前面：北遥裂隙会反咬第三锚，连第一跳都未必能落在原定的位置上。",
+        "这不是失误，而是今夜所有人都默认接受的事实。诱饵队会死得偏一点，撤离路会窄一点，门会开歪一点。每个人都把自己的误差往前推，直到目标终于有一瞬间暴露在刀下。",
+        "门开的那一刻，没有誓师，也没有倒数。刻字的手还在抖，火油已经被人背上肩，兵略年只低声说：[b]“进去。”[/b]\n\n因第尔斯点了一下头，连多余的问题都没有。"
       ]
     },
     {
-      "id": "tutorial_battle",
-      "type": "battle",
-      "battle_id": "tutorial_patrol",
+      "id": "cargo_gate",
+      "type": "map",
+      "title": "货运闸门",
+      "description": "从旧排水槽外缘潜入。先调查守卫、裂隙石和搬运线，再逼近监闸巡逻。",
+      "scene_style": "cargo",
       "understanding_rewards": [
         {
           "character_id": "yndeirs",
           "amount": 10
         }
+      ],
+      "required_inspections": 2,
+      "map_bounds": {
+        "left": 70,
+        "right": 1460,
+        "top": 120,
+        "bottom": 970
+      },
+      "map_theme": {
+        "backdrop_color": [
+          0.09,
+          0.11,
+          0.14,
+          1.0
+        ],
+        "distant_glow_color": [
+          0.31,
+          0.24,
+          0.18,
+          0.16
+        ],
+        "far_wall_color": [
+          0.14,
+          0.15,
+          0.18,
+          1.0
+        ],
+        "main_gate_color": [
+          0.23,
+          0.2,
+          0.18,
+          1.0
+        ],
+        "gate_seam_color": [
+          0.08,
+          0.08,
+          0.09,
+          1.0
+        ],
+        "ground_color": [
+          0.2,
+          0.18,
+          0.17,
+          1.0
+        ],
+        "road_stripe_color": [
+          0.52,
+          0.45,
+          0.35,
+          0.3
+        ],
+        "show_main_gate": true,
+        "show_road_stripe": true,
+        "gate_x_ratio": 0.78,
+        "gate_width": 190.0,
+        "gate_height": 350.0,
+        "gate_top": 94.0,
+        "wall_top": 84.0,
+        "wall_height": 256.0,
+        "ground_height": 188.0,
+        "player_anchor_x": 230.0,
+        "player_anchor_y": 930.0,
+        "top_panel_width": 0.56,
+        "background_scale": 1.0
+      },
+      "map_props": [],
+      "map_entities": [
+        {
+          "id": "blood_lamp",
+          "type": "inspect",
+          "trigger_mode": "interact",
+          "prop_style": "lamp",
+          "label": "灯柱铭文",
+          "x": 402,
+          "y": 186,
+          "radius": 72,
+          "event_lines": [
+            "灯柱上的警戒纹记录的不是人，而是位置、热、血和未经允许的触碰。北遥不需要先知道你是谁，只需要知道你不该在这里。",
+            "灯柱边还溅着刚刚裂开的血。秩序在北遥从来不是抽象名词，它会具体地亮一下，然后决定谁该被记下。"
+          ],
+          "result_summary": "你确认了北遥靠铭文管理位置与异常。",
+          "show_visual": false,
+          "show_label": false
+        },
+        {
+          "id": "rift_stone_cart",
+          "type": "inspect",
+          "trigger_mode": "interact",
+          "prop_style": "cart",
+          "label": "裂隙石车",
+          "x": 792,
+          "y": 626,
+          "radius": 86,
+          "event_lines": [
+            "黑布下堆着灰白裂隙石。它们会被送进府邸，压稳空间层，也压稳今晚将要举行的一切程序。",
+            "北遥不是靠一个名字坐稳的。它靠物流、符文、链子、记录和一整车被运进深处的石头。"
+          ],
+          "result_summary": "你确认了裂隙石正在流入府邸深处。",
+          "show_visual": false,
+          "show_label": false
+        },
+        {
+          "id": "chained_laborers",
+          "type": "inspect",
+          "trigger_mode": "interact",
+          "prop_style": "figure",
+          "label": "搬运队",
+          "x": 1348,
+          "y": 526,
+          "radius": 96,
+          "event_lines": [
+            "搬运队脚踝上的短链穿过车底铁环，确保他们不能离货车太远。低阶监工的符鞭不一定抽裂皮肉，却能让共鸣弱的人疼到站不稳。",
+            "这就是北遥最日常的一层脸。帝国不是只在高位上腐坏，它连押一辆车经过的方式都写满了惩戒。"
+          ],
+          "result_summary": "你看见了北遥如何把人拴进日常劳动。",
+          "show_visual": false,
+          "show_label": false
+        },
+        {
+          "id": "cargo_patrol",
+          "type": "enemy",
+          "trigger_mode": "interact",
+          "prop_style": "guard",
+          "label": "监闸巡逻",
+          "x": 1160,
+          "y": 180,
+          "radius": 92,
+          "requires_inspections": true,
+          "completes_step": true,
+          "event_lines": [
+            "闸门边的巡逻已经注意到了不该出现的空隙。有人先去摸警哨，有人想扑向灯柱，有人只是本能地退向更安全的位置。",
+            "你不需要和他们争论身份。下一步发生的，只会是冲突。"
+          ],
+          "result_summary": "监闸巡逻拦住了去路。",
+          "show_visual": false,
+          "show_label": false
+        }
+      ],
+      "background_image": "res://art/maps/cargo_gate_v1.png"
+    },
+    {
+      "id": "tutorial_battle_intro",
+      "type": "narrative",
+      "title": "第一场冲突",
+      "lines": [
+        "闸门边的守卫最先看见的不是你的脸，而是不该出现在这里的空隙。有人去摸警哨，有人想扑向灯柱，有人本能地往更安全的位置退。北遥最普通的一层秩序，就是这样先学会自保，再学会杀人。",
+        "因第尔斯不需要抢先大喊自己的名字。他擅长做的，是让别人的动作失去抵达结果的资格。接下来的冲突里，你要用阻断、锁定和灵性节奏，把这群齿轮一颗颗卡住。"
       ]
     },
     {
-      "id": "between_battles",
+      "id": "tutorial_battle",
+      "type": "battle",
+      "battle_id": "tutorial_patrol"
+    },
+    {
+      "id": "outer_court_transition",
       "type": "narrative",
-      "title": "逼近",
+      "title": "更深处",
       "lines": [
-        "巡逻兵倒下后，城里没有任何骚动。北遥已经习惯了死人，只是还不习惯主人也会死。",
-        "因第尔斯继续向城主府走去。越靠近中心，街上的火光越整齐，脚步声也越少，像是整座城都在为某一场裁决让路。",
-        "所罗门·北遥就在那里。刺杀将要发生，但真正被刺穿的未必只是一个人。"
+        "货运闸门后的血不会传到继名室里去。真正替你们争时间的人，此刻正在别处被钉上墙、被登记成前哨、或被一句更干净的军报抹平。",
+        "正因为如此，往北遥更深处走时，反而会觉得安静。不是危险变少了，而是这座城的核心从不需要喧闹。它只需要每一层秩序都按时落回原位，把不该存在的人一点点压出去。"
+      ]
+    },
+    {
+      "id": "outer_court",
+      "type": "map",
+      "title": "北遥府邸外苑",
+      "description": "调查回廊、第二门锚与被重新分配的巡防。这里没有热闹，只有越来越厚的秩序。",
+      "scene_style": "outer",
+      "understanding_rewards": [
+        {
+          "character_id": "yndeirs",
+          "amount": 10
+        }
+      ],
+      "required_inspections": 2,
+      "map_bounds": {
+        "left": 120,
+        "right": 1420,
+        "top": 120,
+        "bottom": 960
+      },
+      "map_theme": {
+        "backdrop_color": [
+          0.08,
+          0.09,
+          0.12,
+          1.0
+        ],
+        "distant_glow_color": [
+          0.22,
+          0.24,
+          0.29,
+          0.18
+        ],
+        "far_wall_color": [
+          0.15,
+          0.16,
+          0.2,
+          1.0
+        ],
+        "main_gate_color": [
+          0.31,
+          0.29,
+          0.31,
+          1.0
+        ],
+        "gate_seam_color": [
+          0.11,
+          0.11,
+          0.13,
+          1.0
+        ],
+        "ground_color": [
+          0.17,
+          0.18,
+          0.2,
+          1.0
+        ],
+        "road_stripe_color": [
+          0.64,
+          0.63,
+          0.58,
+          0.18
+        ],
+        "show_main_gate": true,
+        "show_road_stripe": true,
+        "gate_x_ratio": 0.72,
+        "gate_width": 248.0,
+        "gate_height": 322.0,
+        "gate_top": 118.0,
+        "wall_top": 102.0,
+        "wall_height": 238.0,
+        "ground_height": 196.0,
+        "player_anchor_x": 760.0,
+        "player_anchor_y": 910.0,
+        "top_panel_width": 0.6,
+        "background_scale": 1.0
+      },
+      "map_props": [],
+      "map_entities": [
+        {
+          "id": "service_drain",
+          "type": "inspect",
+          "trigger_mode": "interact",
+          "prop_style": "drain",
+          "label": "污水道",
+          "x": 202,
+          "y": 284,
+          "radius": 76,
+          "event_lines": [
+            "外苑地砖下压着旧污水道和补过几次的暗槽。曾在后厨做事的人把这条线留给了兵略年，如今它只剩下一层脏冷的回音。",
+            "北遥的每一道光都靠看不见的脏东西垫在下面。你越靠近中心，越能意识到这座城是被多少被遮住的层次托起来的。"
+          ],
+          "result_summary": "你确认了外苑的暗线与旧路。",
+          "show_visual": false,
+          "show_label": false
+        },
+        {
+          "id": "second_anchor",
+          "type": "inspect",
+          "trigger_mode": "interact",
+          "prop_style": "anchor",
+          "label": "第二门锚",
+          "x": 768,
+          "y": 506,
+          "radius": 84,
+          "event_lines": [
+            "第二门锚藏在回廊转角。铭文尾部被压得很深，说明这里的空间层已经开始主动回弹，不愿让不该通过的人借门靠近。",
+            "兵略年的人把自己磨成了足够细的小误差，才把这枚锚钉进外苑。"
+          ],
+          "result_summary": "你确认了第二门锚仍然勉强可用。",
+          "show_visual": false,
+          "show_label": false
+        },
+        {
+          "id": "patrol_shift",
+          "type": "inspect",
+          "trigger_mode": "interact",
+          "prop_style": "lamp",
+          "label": "巡防空隙",
+          "x": 1198,
+          "y": 438,
+          "radius": 84,
+          "event_lines": [
+            "外苑亲卫并没有全被引开。他们只是被迫挪了位置，让原本不该存在的空隙短暂浮出来。",
+            "这不是守备崩坏，而是秩序在应急时重新分配重量。北遥最难对付的地方，从来不是人多，而是它会很快学会把哪一层先压上来。"
+          ],
+          "result_summary": "你看清了北遥外苑如何重新收紧自己。",
+          "show_visual": false,
+          "show_label": false
+        },
+        {
+          "id": "inheritance_door",
+          "type": "inspect",
+          "trigger_mode": "interact",
+          "prop_style": "door",
+          "label": "继名室前",
+          "x": 785,
+          "y": 112,
+          "radius": 100,
+          "requires_inspections": true,
+          "completes_step": true,
+          "event_lines": [
+            "回廊尽头比别处更冷。门还没有彻底打开，可名字的重量已经先压出来了。",
+            "再往前，问题就不再是如何潜入北遥，而是如何在它的继名结构里留下一个真正会死的空洞。"
+          ],
+          "result_summary": "你抵达了继名室之前。",
+          "show_visual": false,
+          "show_label": false
+        }
+      ],
+      "background_image": "res://art/maps/outer_court_v1.png"
+    },
+    {
+      "id": "antechamber",
+      "type": "narrative",
+      "title": "名字的容器",
+      "lines": [
+        "继名室不大，却挂满了画像。它们没有活人的眼神，也没有死人的空洞，只把一种被整理过的威严钉在墙上，逼后来者相信名字比身体更长，礼法比血更耐久。",
+        "地面的环形裂纹绕过高背椅、低柱与铭文牌，最后连到每一幅画像下方。这里不像房间，更像一个专门盛放“北遥”这个名字的容器。血、名、灵性、影子、呼吸，都会被它记住。",
+        "当代所罗门北遥坐在高背椅上，没有露出惊讶。他先看见的是你脚下那一片断断续续的空白，然后才微微偏头，像在辨认一件不该被放进室内的器物。",
+        "[b]“你不是刺客。”[/b]\n\n他的声音不高，却像整间继名室都在替他说话。\n\n[b]“你是漏洞。”[/b]"
       ]
     },
     {
       "id": "boss_approach",
       "type": "map",
-      "title": "城主府外",
-      "description": "靠近城主府前庭。Boss 警戒区会在你进入范围后强制触发战前交互。",
+      "title": "继名室前",
+      "description": "靠近门前的危险范围后，会强制进入最终对峙。",
+      "scene_style": "sanctum",
       "map_bounds": {
-        "left": 240,
-        "right": 1130,
-        "top": 320,
-        "bottom": 500
+        "left": 180,
+        "right": 1350,
+        "top": 120,
+        "bottom": 980
       },
+      "map_theme": {
+        "backdrop_color": [
+          0.07,
+          0.08,
+          0.1,
+          1.0
+        ],
+        "distant_glow_color": [
+          0.44,
+          0.45,
+          0.52,
+          0.12
+        ],
+        "far_wall_color": [
+          0.18,
+          0.18,
+          0.22,
+          1.0
+        ],
+        "main_gate_color": [
+          0.36,
+          0.35,
+          0.39,
+          1.0
+        ],
+        "gate_seam_color": [
+          0.14,
+          0.14,
+          0.16,
+          1.0
+        ],
+        "ground_color": [
+          0.15,
+          0.16,
+          0.18,
+          1.0
+        ],
+        "road_stripe_color": [
+          0.72,
+          0.71,
+          0.75,
+          0.1
+        ],
+        "show_main_gate": true,
+        "show_road_stripe": false,
+        "gate_x_ratio": 0.66,
+        "gate_width": 298.0,
+        "gate_height": 334.0,
+        "gate_top": 96.0,
+        "wall_top": 92.0,
+        "wall_height": 248.0,
+        "ground_height": 204.0,
+        "player_anchor_x": 770.0,
+        "player_anchor_y": 930.0,
+        "top_panel_width": 0.48,
+        "background_scale": 1.0
+      },
+      "map_props": [],
       "map_entities": [
         {
           "id": "solomon_trigger",
           "type": "boss",
           "trigger_mode": "proximity",
-          "label": "所罗门·北遥",
-          "x": 980,
-          "y": 430,
-          "radius": 96,
+          "prop_style": "door",
+          "label": "所罗门北遥",
+          "x": 770,
+          "y": 186,
+          "radius": 138,
           "completes_step": true,
           "event_lines": [
-            "你刚踏入前庭，原本安静得近乎凝固的空气就先一步绷紧了。",
-            "所罗门·北遥没有后退。他只是转过身，像早已等到这一刻。",
-            "再接下来要发生的，不会再给任何人留下撤回的余地。"
+            "你还没有真正踏进继名室，空间的距离就先被试探着拨动了半寸。墙上那些被命名过的目光，像已经在隔着门盯住你。",
+            "所罗门北遥没有后退。他只是看见了那片不被记录的空白，并把它叫成漏洞。",
+            "下一步不再是潜入，而是对峙。"
           ],
-          "result_summary": "所罗门·北遥已经看见了你。"
+          "result_summary": "所罗门北遥已经看见了你。",
+          "show_visual": false,
+          "show_label": false
         }
-      ]
+      ],
+      "background_image": "res://art/maps/sanctum_approach_v1.png"
     },
     {
       "id": "boss_battle",
@@ -167,11 +616,11 @@
     {
       "id": "closing",
       "type": "narrative",
-      "title": "刀锋之后",
+      "title": "通报比血干净",
       "lines": [
-        "刀锋命中了目标，但北遥并未因此立刻崩塌。帝国的秩序不是靠一个人站着，也不会因为一个人倒下就学会死亡。",
-        "可裂口已经出现了。因第尔斯很清楚，今晚之后再被讨论的，就不只是一次刺杀，而是北境有没有可能被真正撬开。",
-        "北遥之乱的第一道裂缝到此为止。接下来要进入的，不再只是逃离，而是革命真正开始之前的长夜。"
+        "所罗门北遥这个人死了。血已经流出来，名字的容器也裂开了一个真正会死的洞。可北遥裂隙没有停在尸体上，它越过戒指、画像、低柱和你刚刚压下去的囚笼，直接回到了更高处。",
+        "随后响起的不是凯旋，而是封锁。内苑、府邸、街口和城墙几乎同时开始收紧，许多互相冲突的命令在夜里先后炸开。大多数人甚至还不知道北遥已经死了，可帝国真正的反应已经先一步抵达。",
+        "兵略年说得没错，今夜撬开的不是整座城，而是第一道裂口。北遥之乱从这里开始，而你真正要追的东西，也没有随着这一刀一起结束。"
       ]
     }
   ]
